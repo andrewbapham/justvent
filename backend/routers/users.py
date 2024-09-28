@@ -42,10 +42,9 @@ async def get_user_emotions(user_id: str, date_query: Annotated[EmotionDateRange
     emotions = collections.defaultdict(list)
     for journal in journals:
         for emotion, value in journal["emotions"].items():
-            emotions[emotion].append(value)
-    
-    emotion_averages = {}
-    for emotion, values in emotions.items():
-        emotion_averages[emotion] = sum(values) / len(values)
+            emotions[emotion] += value
 
-    return emotion_averages
+    for emotion, value in emotions.items():
+        emotions[emotion] = value / len(journals)
+
+    return emotions
