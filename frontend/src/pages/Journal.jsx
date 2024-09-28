@@ -48,7 +48,7 @@ const Journal = () => {
   useEffect(() => {
     const fetchJournals = async () => {
       const result = await axiosClient.get(`journals/user/user_001`);
-      console.log(result);
+      setJournals(result.data.journals);
     };
 
     fetchJournals();
@@ -62,8 +62,6 @@ const Journal = () => {
     setPrompt(prompts[promptNum]);
   };
 
-  const postJournalEntry = () => {};
-
   const handleAddJournal = async () => {
     const newErrors = { title: false, content: false };
     if (title && content) {
@@ -75,7 +73,6 @@ const Journal = () => {
       };
       await axiosClient.post(`journals`, {
         content: content,
-        emotions: {},
         user_id: "user_001",
       });
       setJournals([newJournal, ...journals]);
@@ -90,6 +87,8 @@ const Journal = () => {
       setErrors(newErrors);
     }
   };
+
+  const handleDeleteJournal = async () => {};
 
   return (
     <Center
