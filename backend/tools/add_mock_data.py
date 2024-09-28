@@ -1,9 +1,9 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 import requests
 from emotion_detection import EmotionDetection
 
 detector = EmotionDetection()
-start_date = "2024-09-01"
+start_date = datetime(2024, 8, 1)
 journal_entries = [
     "I started September with a clear mind. I had a productive day at work.",
     "Went for a long walk today. It felt great to be outside.",
@@ -41,6 +41,6 @@ data = [{
         "date": str(start_date + timedelta(days=i))
     } for i in range(len(journal_entries))
 ]
-
-for record in data:
-    requests.post("http://localhost:8000/api/v1/journals", json=record)
+print(data)
+# for record in data:
+#     requests.post("http://localhost:8000/api/v1/journals", json=record)
