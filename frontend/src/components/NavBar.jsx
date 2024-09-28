@@ -57,6 +57,7 @@ function NavBar() {
         </UnstyledButton>
       </Group>
       <UnstyledButton
+          onClick={() => navigate("/signin")}
         className="custom-button"
         style={{
           padding: "8px",
