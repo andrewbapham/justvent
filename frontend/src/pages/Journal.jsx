@@ -53,7 +53,6 @@ const Journal = () => {
         </Button>
       </Card>
 
-      {/* Past Journal Entries Section */}
       <Title order={3} align="center" mt="xl" mb="lg">
         Past Journals
       </Title>

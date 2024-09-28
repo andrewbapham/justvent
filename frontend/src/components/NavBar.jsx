@@ -1,8 +1,11 @@
 import { Group, UnstyledButton } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import homeIcon from "../assets/new_make_logo_updated.png"; 
+import './Navbar.css';
 
 function NavBar() {
   const navigate = useNavigate();
+  
   return (
     <Group
       h="100%"
@@ -12,30 +15,62 @@ function NavBar() {
         paddingBottom: "10px",
       }}
     >
-      <Group justify="space-between" style={{ flex: 1, padding: "20px" }}>
-        <Group ml="xl" gap={10} visibleFrom="sm">
+      <Group justify="space-between" style={{ flex: 1, padding: "10px" }}>
+        <Group ml="xl" gap={2} visibleFrom="sm">
+        
           <UnstyledButton
             onClick={() => navigate("/")}
-            style={{ padding: "8px" }}
+            className="custom-button"  
+            style={{
+              padding: "8px",
+              outline: "none", 
+              backgroundColor: "transparent", 
+              border: "none", 
+            }}
           >
-            Home
+            <img 
+              src={homeIcon}
+              alt="Home"
+              width={80}
+              height={80}
+            />
           </UnstyledButton>
+
           <UnstyledButton
             onClick={() => navigate("/journal")}
-            style={{ padding: "8px" }}
+            className="custom-button"  
+            style={{
+              padding: "8px",
+              outline: "none",
+              backgroundColor: "transparent",
+              border: "none",
+            }}
           >
             Journal
           </UnstyledButton>
+
           <UnstyledButton
             onClick={() => navigate("/dashboard")}
-            style={{ padding: "8px" }}
+            className="custom-button" 
+            style={{
+              padding: "8px",
+              outline: "none",
+              backgroundColor: "transparent",
+              border: "none",
+            }}
           >
             Dashboard
           </UnstyledButton>
+
           <UnstyledButton
-           onClick={() => navigate("/signin")}
-           style={{ padding: "8px" }}
-           >
+            className="custom-button"  
+            style={{
+              padding: "8px",
+              outline: "none",
+              backgroundColor: "transparent",
+              border: "none",
+            }}
+          >
             Sign In
           </UnstyledButton>
         </Group>
