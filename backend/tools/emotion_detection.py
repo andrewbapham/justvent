@@ -2,30 +2,42 @@ from transformers import pipeline
 import pandas as pd
 import plotly.express as px
 import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
 
 class EmotionDetection:
 
     def __init__(self):
         # download pre-trained emotion classification model
-        self.model = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base") # Pytorch 
+        self.model = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base", top_k=None) # Pytorch 
         self.df = pd.DataFrame() # Pandas Dataframe
+        self.preprocessed_text = "" # str
 
     def processText(self, text: str) -> None:
         # Returns None.
         # This processes the text by removing splitting the text by sentences.
-        text = re.split('[.!?]', text)
-        dataset = {"text": text[:-1]}
-        self.df = pd.DataFrame(dataset)
+        text = text.lower()     # Convert to lowercase
+        text = re.sub('[^\w\s]', '', text)    # Remove special characters and punctuation
+        words = nltk.word_tokenize(text)    # Tokenization
+        # Remove stop words and apply lemmatization
+        lemmatizer = WordNetLemmatizer()
+        words = [lemmatizer.lemmatize(word) for word in words if word not in stopwords.words('english')]
+        # Join words back into a string
+        self.preprocessed_text = ' '.join(words)
+        # dataset = {"text": preprocessed_text}
+        # self.df = pd.DataFrame(dataset, index=[6])
 
     def detectEmotions(self, text: str) -> None:
         # Returns None.
         # This uses the model to detect the emotions from the text.
         self.processText(text)
         # compute the emotion of each tweet using the model
-        all_texts = self.df["text"].values.tolist()
-        all_emotions = self.model(all_texts)
-        self.df["emotion_label"] = [d["label"] for d in all_emotions]
-        self.df["emotion_score"] = [d["score"] for d in all_emotions]
+        all_emotions = self.model(self.preprocessed_text)
+        print(all_emotions)
+        self.df["emotion_label"] = [d["label"] for d in all_emotions[0]]
+        self.df["emotion_score"] = [d["score"] for d in all_emotions[0]]
+        print(self.df)
 
     def getEmotions(self, text: str=None) -> list[dict[int]] | None:
         # This returns the emotions stored in the dataframe
