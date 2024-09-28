@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
-import requests
 from emotion_detection import EmotionDetection
-from routers.journals import create_journal
+from journals import create_journal
 
 detector = EmotionDetection()
 start_date = datetime(2024, 8, 1)
