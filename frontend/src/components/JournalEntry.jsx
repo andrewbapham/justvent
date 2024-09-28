@@ -20,7 +20,9 @@ export function JournalEntry({ id, title, content, date }) {
           c="gray.7"
           px={"30px"}
           py={"10px"}
-          style={{ overflowY: scroll }}
+          pb={"30px"}
+          style={{ overflowY: scroll, wordBreak: "break-word" }}
+          maw={"75vw"}
         >
           {content}
         </Text>
