@@ -26,7 +26,6 @@ class EmotionDetection:
         all_emotions = self.model(all_texts)
         self.df["emotion_label"] = [d["label"] for d in all_emotions]
         self.df["emotion_score"] = [d["score"] for d in all_emotions]
-        print(self.df)
 
     def getEmotions(self, text: str=None) -> list[dict[int]] | None:
         # This returns the emotions stored in the dataframe
