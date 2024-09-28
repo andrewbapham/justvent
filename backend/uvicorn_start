@@ -1,0 +1,17 @@
+#!/bin/bash
+
+NAME=fastapi-app
+DIR=/app/backend
+USER=ubuntu
+GROUP=ubuntu
+WORKERS=2
+WORKER_CLASS=uvicorn.workers.UvicornWorker
+LOG_LEVEL=error
+
+cd $DIR
+export PATH=/home/ubuntu/miniconda3/bin:$PATH
+
+exec uvicorn app:app \
+  --host=0.0.0.0 \
+  --port=8000 \
+  --reload
