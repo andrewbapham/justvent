@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Textarea, TextInput, Button, Card, Title, Stack, Center } from '@mantine/core';
-import new_make_logo from "../assets/new_make_logo_updated.png"; // Import the local image
+import new_make_logo from "../assets/new_make_logo_updated.png"; 
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -20,7 +20,7 @@ const Signin = () => {
             Sign in or create your account
         </Title>
         <div>
-          {/* Image in the top of the box */}
+       
           <img src={new_make_logo} alt="JustVent Logo" className='wrap' style={{width : '300px',height : '120px'}}/>
         </div>
 

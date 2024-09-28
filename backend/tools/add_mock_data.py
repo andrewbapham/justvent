@@ -1,166 +1,46 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 import requests
+from emotion_detection import EmotionDetection
 
-data = [
-    {
-        "user_id": "user_001",
-        "content": "Today was rough. My project didn’t go as planned, and I felt like everything was falling apart. It’s hard to stay positive when things keep going wrong.",
-        "emotions": {
-            "anger": 6,
-            "sadness": 7,
-            "neutral": 2,
-            "joy": 1
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=-1))
-    },
-    {
-        "user_id": "user_001",
-        "content": "I had a great day today! I got a promotion at work, and I’m so excited to start my new role. I feel like all my hard work has finally paid off.",
-        "emotions": {
-            "joy": 10,
-            "neutral": 2,
-            "surprise": 3
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=0))
-    },
-    {
-        "user_id": "user_002",
-        "content": "I’m feeling really anxious today. I have a big presentation at work, and I’m worried I won’t do well. I wish I had more time to prepare.",
-        "emotions": {
-            "fear": 8,
-            "anger": 4,
-            "neutral": 1
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=-1))
-
-    },
-    {
-        "user_id": "user_002",
-        "content": "I had a great workout today! I feel so energized and ready to take on the day. Exercise always helps me feel better.",
-        "emotions": {
-            "joy": 6,
-            "neutral": 3,
-            "surprise": 2
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=0))
-    },
-    {
-        "user_id": "user_002",
-        "content": "I just got a promotion at work! It’s been such a long journey, and I’m beyond excited. I can’t wait to celebrate with my family tonight.",
-        "emotions": {
-            "joy": 9,
-            "surprise": 5,
-            "neutral": 1,
-            "sadness": 0
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=1))
-    },
-    {
-        "user_id": "user_003",
-        "content": "I had a really productive day today. I got a lot of work done and checked off everything on my to-do list. It feels good to be so organized.",
-        "emotions": {
-            "joy": 4,
-            "neutral": 6,
-            "surprise": 2
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=-1))
-    },
-    {
-        "user_id": "user_003",
-        "content": "I’m feeling really overwhelmed today. I have so much to do, and I don’t know where to start. I wish I had more time in the day.",
-        "emotions": {
-            "sadness": 7,
-            "anger": 3,
-            "neutral": 2
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=0))
-    },
-    {
-        "user_id": "user_003",
-        "content": "Had a quiet day today. Nothing much happened, just the usual routine of work and rest. I guess it's one of those neutral days.",
-        "emotions": {
-            "neutral": 8,
-            "joy": 2,
-            "sadness": 1,
-            "surprise": 0
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=1))
-    },
-
-    {
-        "user_id": "user_004",
-        "content": "I had a great day today! I spent the afternoon with friends, and we had a lot of fun. It’s nice to take a break and relax.",
-        "emotions": {
-            "joy": 8,
-            "neutral": 4,
-            "surprise": 2
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=0))
-    },
-    {
-        "user_id": "user_004",
-        "content": "I’m feeling really tired today. I didn’t get much sleep last night, and I’m struggling to stay awake. I wish I had more energy.",
-        "emotions": {
-            "sadness": 4,
-            "neutral": 5,
-            "surprise": 1
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=1))
-    },
-    {
-        "user_id": "user_004",
-        "content": "Something really strange happened today at the store. A random person complimented me, and it felt so unexpected. I didn’t know how to react!",
-        "emotions": {
-            "surprise": 7,
-            "neutral": 4,
-            "joy": 3,
-            "fear": 2
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=2))
-    },
-    {
-        "user_id": "user_005",
-        "content": "I had a great day today! I went for a hike in the mountains, and the views were amazing. It’s nice to get outside and enjoy nature.",
-        "emotions": {
-            "joy": 7,
-            "neutral": 3,
-            "surprise": 2
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=0))
-    },
-    {
-        "user_id": "user_005",
-        "content": "I’m feeling really stressed today. I have a lot of deadlines coming up, and I’m worried I won’t finish everything on time. I wish I had more hours in the day.",
-        "emotions": {
-            "fear": 6,
-            "anger": 3,
-            "neutral": 2
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=2))
-    },
-    {
-        "user_id": "user_005",
-        "content": "I'm feeling uneasy about tomorrow’s presentation. I’ve been rehearsing, but the fear of messing up is still there.",
-        "emotions": {
-            "fear": 8,
-            "neutral": 3,
-            "sadness": 2,
-            "joy": 1
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=3))
-    },
-    {
-        "user_id": "user_006",
-        "content": "I had a bad interaction with a coworker. It was frustrating, and now I’m trying to calm down. I hate feeling this way.",
-        "emotions": {
-            "anger": 7,
-            "disgust": 5,
-            "neutral": 2,
-            "sadness": 3
-        },
-        "date": str(datetime.now(timezone.utc) + timedelta(days=0))
-    }
+detector = EmotionDetection()
+start_date = datetime(2024, 8, 1)
+journal_entries = [
+    "I started September with a clear mind. I had a productive day at work.",
+    "Went for a long walk today. It felt great to be outside.",
+    "Caught up with an old friend over coffee. It was so refreshing!",
+    "Had a tough day at work. Feeling a bit overwhelmed with my tasks.",
+    "Took some time to relax today. I watched a movie and unwound.",
+    "Finally completed the project I was working on for weeks. So satisfying!",
+    "Feeling more positive today. Started planning a new hobby project.",
+    "Today was hectic, but I managed to handle it all. Feeling accomplished.",
+    "Spent some quality time with family. Feeling loved and grateful.",
+    "A quiet day. Just enjoyed some alone time and reflection.",
+    "Work was busy today, but I stayed focused and got everything done.",
+    "Feeling stressed about upcoming deadlines, but I’ll manage.",
+    "Had a nice dinner with friends. It was great to catch up.",
+    "Feeling a bit under the weather, took it easy today.",
+    "Got some great feedback at work. Feeling motivated to keep improving.",
+    "Tried out a new recipe today. It turned out amazing!",
+    "Feeling a bit anxious about the future, but trying to stay positive.",
+    "Had a productive meeting today. I think we're making great progress.",
+    "Went for a bike ride. It helped clear my mind.",
+    "Today was a good day. Managed to complete all my tasks early.",
+    "Feeling a bit tired, but happy with the progress I’ve made at work.",
+    "Had a productive workout session today. Feeling energized.",
+    "Finished reading a book I’ve been working through for a while.",
+    "Today was tough. A lot of unexpected things happened at work.",
+    "Grateful for the small wins today. Every step counts.",
+    "Feeling a bit down, but I know tomorrow is a new day.",
+    "Ended the day on a positive note with some self-care."
 ]
 
-for record in data:
-    requests.post("http://localhost:8000/api/v1/journals", json=record)
+data = [{
+        "user_id": "user_001",
+        "content": journal_entries[i],
+        "emotions": detector.getEmotions(journal_entries[i]),
+        "date": str(start_date + timedelta(days=i))
+    } for i in range(len(journal_entries))
+]
+print(data)
+# for record in data:
+#     requests.post("http://localhost:8000/api/v1/journals", json=record)

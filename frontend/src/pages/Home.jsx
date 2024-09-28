@@ -14,18 +14,18 @@ function Home() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "flex-start", // Move content closer to the top
-          paddingTop: "2em", // Add some padding to control vertical positioning
+          justifyContent: "flex-start",
+          paddingTop: "2em",
         }}
       >
         <Flex direction="row" align="center" justify="center" p="lg">
-          {/* Text and Button in a column */}
+         
           <Box display="flex" flexDirection="column" alignItems="flex-start" mr="xl">
-            {/* Tagline */}
+          
             <Title
               order={1}
               size={48}
-              style={{ lineHeight: "1.2", marginBottom: "1em" }} // Space below the text
+              style={{ lineHeight: "1.2", marginBottom: "1em" }} 
             >
               Feel heard at <i>Anytime</i>,<i> Anywhere</i>, <i>Anyplace</i>
               <br />
@@ -34,17 +34,15 @@ function Home() {
            
           </Box>
 
-          {/* Image with spin animation */}
           <Image
-            src={new_make_logo} // Use your imported image
+            src={new_make_logo} 
             alt="Logo"
-            width={160} // Adjust the width as needed
-            style={spinAnimation} // Apply spin animation
+            width={160} 
+            style={spinAnimation} 
           />
         </Flex>
       </section>
 
-      {/* Define the keyframes for the spin animation */}
       <style>
         {`
           @keyframes spin {

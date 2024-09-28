@@ -1,4 +1,4 @@
-// data.js
+
 export const data = [
     { emotion: 'Happy', value: 100000},
     { emotion: 'Sad', value: 8 },
