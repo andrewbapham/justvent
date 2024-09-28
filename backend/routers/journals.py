@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from database import db
-from datetime import datetime, timezone
+from datetime import date
 from models.journal_types import Journal, JournalSearch
 from util.mongo_utils import serialize_ids
 from tools.emotion_detection import EmotionDetection
@@ -26,7 +26,7 @@ async def create_journal(journal: Journal):
     Date is auto-generated based on the current time.
     """
     document = journal.model_dump()
-    document.update({"date": str(datetime.now(timezone.utc))})
+    document.update({"date": str(date.today())})
     document.update({"emotions": str(detector.getEmotions(document["content"]))})
     #document.update({"date": str(journal.date)})
     journal_id = db.journals.insert_one(document).inserted_id
