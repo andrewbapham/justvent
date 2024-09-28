@@ -1,0 +1,65 @@
+
+.fullscreen-center {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh; 
+  background-color: #FEFAE0;
+}
+
+
+.fullscreen-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bounce {
+  animation: bounce 2s infinite;
+}
+
+.card-title {
+  font-size: 35px;
+  text-align: center; 
+}
+
+.card-subtitle {
+  font-size: 30px;
+}
+
+.emoji-large {
+  font-size: 6rem;
+  text-align: center;
+  margin-bottom: 10px; 
+}
+.current-mood-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.current-mood-text {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+.emojiword{
+  font-size: 2em;
+  align-items: center;
+  justify-content: center;
+  margin-left: 35%;
+}
+
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Title as MantineTitle } from '@mantine/core';
 import { BarChart } from '@mantine/charts'; 
-import { data } from './data'; 
+import { data } from '../../data'; 
 
 const Barchart = () => {
   return (
