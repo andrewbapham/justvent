@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-import requests
 from emotion_detection import EmotionDetection
 from routers.journals import create_journal
 
