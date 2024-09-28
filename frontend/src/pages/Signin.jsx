@@ -76,7 +76,7 @@ const Signin = () => {
             </Button>
               
               {/* Text to create an account */}
-            <p className="create-account" style={{ marginTop: '15px', cursor: 'pointer' }}>
+            <p className="create-account" onClick={() => {alert("Coming on future updates")}} style={{ marginTop: '15px', cursor: 'pointer' }}>
               Create an account
             </p>
 

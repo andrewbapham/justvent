@@ -62,12 +62,16 @@ function Home() {
           <Title order={2} size={32} style={{ marginBottom: "1em", textAlign: "center" }}>
             Discover the power of Daily Jounaling
           </Title>
+
+          {/* Line Divider */}
+        <div style={{ width: "60%", height: "2px", backgroundColor: "#D4A373", margin: "1em 0" }} />
+          
           <p style={{ textAlign: "center", fontSize: "18px", color: "#333" }}>
           Daily journaling is a powerful practice that provides a safe space for emotional release and self-reflection. By putting pen to paper, we can untangle complex feelings, clarify our thoughts, and gain insights into our experiences. With JustVent, you can enhance this experience even further; the app uses AI to analyze your entries, providing insights into your emotional patterns and helping you track your growth over time.</p>
         </Flex>
        
         <Flex direction="row-reverse" align="center" justify="space-between" p="3em" h="40%" w={"100%"} onMouseOver={
-          () => {setAnimation({ ...animation, opacity: 1, left: "180px", width: "350px" });
+          () => {setAnimation({ ...animation, opacity: 1, left: "180px", width: "400px" });
            setbtnOpacity(1);
           }}>
           {/* Text and Button in a column */}
