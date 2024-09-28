@@ -1,4 +1,5 @@
-# Hack the Hill II
+# JustVent
+
 Mindfulness & Journaling App with Prompts
 Core Idea: A self-reflection app that helps users with guided journaling based on mindfulness principles. It provides daily prompts to help users reflect on their day and set goals for emotional, mental, and spiritual growth.
 Features: Daily or weekly journaling prompts
