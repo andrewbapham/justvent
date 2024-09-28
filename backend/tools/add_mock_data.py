@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import requests
 from emotion_detection import EmotionDetection
+from routers.journals import create_journal
 
 detector = EmotionDetection()
 start_date = datetime(2024, 8, 1)
@@ -41,6 +42,6 @@ data = [{
         "date": str(start_date + timedelta(days=i))
     } for i in range(len(journal_entries))
 ]
-print(data)
-# for record in data:
-#     requests.post("http://localhost:8000/api/v1/journals", json=record)
+
+for record in data:
+   create_journal(record)

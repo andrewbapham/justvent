@@ -73,7 +73,7 @@ function Home() {
 
               <button style={{width:"100%", fontSize:"20px", backgroundColor:"#ccd5ae", opacity: btnOpacity, height: "5em", transition:"opacity 2s"}} 
               id={"btn-signin"}
-              onClick={() => navigate("/signin")}
+              onClick={() => navigate("/journal")}
               >
                 Start writing now
               </button>
