@@ -1,0 +1,28 @@
+/* Style the unstyled button */
+.custom-button {
+  padding: 10px 20px;
+  background-color: #007BFF; /* Background color */
+  color: rgb(0, 0, 0); /* Text color */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 16px; /* Font size */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover and transform */
+}
+
+/* Hover effect */
+.custom-button:hover {
+  background-color: #fefae0;
+  color: #d4a373; /* Darker background on hover */
+  transform: translateY(-5px); /* Move the button up by 5px */
+}
+
+.custom-button:active {
+  background-color: #004085; /* Even darker background on click */
+}
+
+/* Focus state */
+.custom-button:focus {
+  outline: 2px solid #80bdff; /* Add a focus outline */
+  outline-offset: 2px;
+}

@@ -1,0 +1,17 @@
+/* Dashboard.css */
+
+/* Define the bouncing animation */
+@keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px); /* Adjust the value to control how high it bounces */
+    }
+  }
+  
+  /* Apply the bounce animation to elements with the bounce class */
+  .bounce {
+    animation: bounce 2s infinite; /* 2 seconds duration, repeats infinitely */
+  }
+  

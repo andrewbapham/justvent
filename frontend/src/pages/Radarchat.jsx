@@ -25,7 +25,7 @@ const Radarchart = () => {
         dataKey="product"
         padding={80}
         series={[{ name: 'sales', color: 'blue.4', opacity: 0.2 }]}
-        axisLabels={{ fontSize: 1 }} 
+        axislabels={{ fontSize: 1 }} 
       />
     </Card>
   );
