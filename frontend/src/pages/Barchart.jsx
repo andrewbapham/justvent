@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Title as MantineTitle } from '@mantine/core';
-import { BarChart } from '@mantine/charts'; // Import Mantine's BarChart
-import { data } from './data'; // Import your data
+import { BarChart } from '@mantine/charts'; 
+import { data } from './data'; 
 
 const Barchart = () => {
   return (
@@ -10,15 +10,14 @@ const Barchart = () => {
         Your Emotional Levels
       </MantineTitle>
 
-      {/* Mantine BarChart */}
       <BarChart
-        h={300} // Adjust height if needed
-        data={data} // Data from './data'
-        dataKey="emotion" // Key for X-axis (make sure your data object has this key)
-        orientation="vertical" // Bar orientation
-        yAxisProps={{ width: 80 }} // Y-axis width adjustment
-        barProps={{ radius: 100 }} // Rounded corners on bars
-        series={[{ name: 'Emotion Levels', color: 'blue.6' }]} // Series with color
+        h={300} 
+        data={data} 
+        dataKey="emotion" 
+        orientation="vertical" 
+        yAxisProps={{ width: 80 }} 
+        barProps={{ radius: 100 }} 
+        series={[{ name: 'Emotion Levels', color: 'blue.6' }]} 
       />
     </Card>
   );
