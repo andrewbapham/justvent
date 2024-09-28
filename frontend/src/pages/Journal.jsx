@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Container,
   Textarea,
   TextInput,
   Button,
@@ -9,6 +8,8 @@ import {
   Stack,
   Center,
 } from "@mantine/core";
+
+import { JournalEntry } from "../components/JournalEntry";
 
 const Journal = () => {
   const [title, setTitle] = useState("");
@@ -109,13 +110,12 @@ const Journal = () => {
         <Stack spacing="md">
           {journals.length > 0 ? (
             journals.map((journal) => (
-              <Card key={journal.id} shadow="sm" padding="lg">
-                <Title order={4}>{journal.title}</Title>
-                <p>{journal.content}</p>
-                <p>
-                  <em>{journal.date}</em>
-                </p>
-              </Card>
+              <JournalEntry
+                id={journal.id}
+                title={journal.title}
+                content={journal.content}
+                date={journal.date}
+              />
             ))
           ) : (
             <p>
