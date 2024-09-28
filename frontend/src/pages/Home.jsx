@@ -2,14 +2,14 @@ import { Center, Box, Title, Image, Button, Flex } from "@mantine/core";
 import new_make_logo from "../assets/new_make_logo_updated.png";
 import notebook from "../assets/notebook.svg";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const spinAnimation = {
     animation: "spin 10s linear infinite",
   };
-
+  const navigate = useNavigate();
   const [btnOpacity, setbtnOpacity] = useState(0)
-
   const [animation, setAnimation] = useState({
     opacity: 0,
     width: "200px",
@@ -98,6 +98,7 @@ function Home() {
 
           #btn-signin:hover {
             border:3px solid #000000;
+            cursor: pointer;
           }
         `}
       </style>

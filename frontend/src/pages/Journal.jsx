@@ -32,6 +32,11 @@ const Journal = () => {
     "What is one accomplishment I’m proud of recently?",
     "Who is someone I appreciate, and why?",
     "What is a goal I can work towards this month?",
+    "What is something kind I did for myself today?",
+    "What is one thing I love about my life right now?",
+    "Who inspires me, and how do they motivate me?",
+    "What is a positive lesson I learned recently?",
+    "What is a simple pleasure I enjoyed today?",
   ];
 
   const axiosClient = axios.create({
@@ -50,12 +55,16 @@ const Journal = () => {
   }, []);
 
   const handleGetPrompt = () => {
-    setPrompt(prompts[Math.floor(Math.random() * prompts.length)]);
+    let promptNum = Math.floor(Math.random() * prompts.length);
+    while (prompts[promptNum] === prompt) {
+      promptNum = Math.floor(Math.random() * prompts.length);
+    }
+    setPrompt(prompts[promptNum]);
   };
 
   const postJournalEntry = () => {};
 
-  const handleAddJournal = () => {
+  const handleAddJournal = async () => {
     const newErrors = { title: false, content: false };
     if (title && content) {
       const newJournal = {
@@ -64,6 +73,11 @@ const Journal = () => {
         content,
         date: new Date().toLocaleDateString(),
       };
+      await axiosClient.post(`journals`, {
+        content: content,
+        emotions: {},
+        user_id: "user_001",
+      });
       setJournals([newJournal, ...journals]);
       setTitle("");
       setContent("");

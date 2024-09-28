@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from emotion_detection import EmotionDetection
-from journals import create_journal
+import requests
 
 detector = EmotionDetection()
 start_date = datetime(2024, 8, 1)
@@ -43,4 +43,4 @@ data = [{
 ]
 
 for record in data:
-   create_journal(record)
+   requests.post("http://justvent-lb-516258045.us-east-2.elb.amazonaws.com/api/v1/journals/", json=record)
