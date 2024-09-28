@@ -1,25 +1,28 @@
-import React from 'react'
-import '@mantine/core/styles.css';
-import { MantineProvider } from '@mantine/core';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import Home from './pages/Home'
-import Dashboard from './pages/Dashboard'
-import Journal from './pages/Journal'
-import NavBar from '../src/components/NavBar'
-import { useState } from 'react'
+import React from "react";
+import "@mantine/core/styles.css";
+import { AppShell } from "@mantine/core";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import Journal from "./pages/Journal";
+import NavBar from "../src/components/NavBar";
 
-import './App.css'
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <MantineProvider>
+    <AppShell
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Router>
-        <header>
+        <AppShell.Header>
           <NavBar />
-        </header>
-        <main>
+        </AppShell.Header>
+        <AppShell.Main>
           <Routes>
             <Route path="/" element={<Home />} />
             {/* <GuestRoute path="/register" element={<Auth key="register" />} /> */}
@@ -30,15 +33,10 @@ function App() {
             {/* <Route path="/profile/:username" element={<Profile />} /> */}
             {/* <AuthRoute path="/@:username" element={<Profile />} /> */}
           </Routes>
-        </main>
-        <footer>
-          <div className="container">
-            footer
-          </div>
-        </footer>
+        </AppShell.Main>
       </Router>
-    </MantineProvider>
-  )
+    </AppShell>
+  );
 }
 
-export default App
+export default App;
