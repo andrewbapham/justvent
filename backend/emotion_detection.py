@@ -60,7 +60,7 @@ class EmotionDetection:
 #         "user_id": "user_006",
 #         "content": string,
 #         "emotions": detector.getEmotions(),
-#         "date": str(datetime.now(timezone.utc) + timedelta(days=0))
+#         "date": str(datetime.now(timezone.utc))
 #     }
 # print(post)
 # detector.plotEmotions()
