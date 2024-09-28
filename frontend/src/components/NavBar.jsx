@@ -1,11 +1,11 @@
 import { Group, UnstyledButton } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import homeIcon from "../assets/new_make_logo_updated.png"; 
-import './Navbar.css';
+import homeIcon from "../assets/new_make_logo_updated.png";
+import "./Navbar.css";
 
 function NavBar() {
   const navigate = useNavigate();
-  
+
   return (
     <Group
       h="100%"
@@ -17,28 +17,22 @@ function NavBar() {
     >
       <Group justify="space-between" style={{ flex: 1, padding: "10px" }}>
         <Group ml="xl" gap={2} visibleFrom="sm">
-        
           <UnstyledButton
             onClick={() => navigate("/")}
-            className="custom-button"  
+            className="custom-button"
             style={{
               padding: "8px",
-              outline: "none", 
-              backgroundColor: "transparent", 
-              border: "none", 
+              outline: "none",
+              backgroundColor: "transparent",
+              border: "none",
             }}
           >
-            <img 
-              src={homeIcon}
-              alt="Home"
-              width={80}
-              height={80}
-            />
+            <img src={homeIcon} alt="Home" width={80} height={80} />
           </UnstyledButton>
 
           <UnstyledButton
             onClick={() => navigate("/journal")}
-            className="custom-button"  
+            className="custom-button"
             style={{
               padding: "8px",
               outline: "none",
@@ -51,7 +45,7 @@ function NavBar() {
 
           <UnstyledButton
             onClick={() => navigate("/dashboard")}
-            className="custom-button" 
+            className="custom-button"
             style={{
               padding: "8px",
               outline: "none",
@@ -63,7 +57,7 @@ function NavBar() {
           </UnstyledButton>
 
           <UnstyledButton
-            className="custom-button"  
+            className="custom-button"
             style={{
               padding: "8px",
               outline: "none",
