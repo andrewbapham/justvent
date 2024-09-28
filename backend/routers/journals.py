@@ -6,7 +6,6 @@ from util.mongo_utils import serialize_ids
 from tools.emotion_detection import EmotionDetection
 
 router = APIRouter()
-detector = EmotionDetection()
 
 @router.get("/journals/user/{user_id}")
 async def get_journals(user_id: str):
@@ -25,6 +24,7 @@ async def create_journal(journal: Journal):
     Creates a journal entry given a Journal object. \n
     Date is auto-generated based on the current time.
     """
+    detector = EmotionDetection()
     document = journal.model_dump()
     document.update({"date": str(date.today())})
     document.update({"emotions": str(detector.getEmotions(document["content"]))})
@@ -45,8 +45,8 @@ async def delete_journal(journal_id: str):
     """
     Deletes a journal entry given an input journal_id.
     """
-    if not db.journals.find_one({"_id": journal_id}):
-        return {"message": "Journal not found"}
+    # if not db.journals.find_one({"_id": journal_id}):
+    #     return {"message": "Journal not found"}
     db.journals.delete_one({"_id": journal_id})
     return {"message": "Journal deleted"}
 
