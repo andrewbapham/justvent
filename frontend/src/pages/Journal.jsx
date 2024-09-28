@@ -50,6 +50,7 @@ const Journal = () => {
       setTitle("");
       setContent("");
       setErrors(newErrors);
+      close();
     } else {
       const newErrors = { title: false, content: false };
       !title ? (newErrors.title = true) : (newErrors.title = false);
@@ -116,6 +117,7 @@ const Journal = () => {
           Add Journal Entry
         </Button>
       </Modal>
+
       <Button
         onClick={open}
         style={{ position: "absolute", top: 100, right: 20 }}
@@ -124,7 +126,7 @@ const Journal = () => {
       </Button>
 
       {/* Past Journal Entries Section */}
-      <Title order={3} align="center" mt="xl" mb="lg">
+      <Title order={1} align="center" mt="xl" mb="lg">
         Past Journal Entries
       </Title>
 
