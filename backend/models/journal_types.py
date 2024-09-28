@@ -24,3 +24,16 @@ class Journal(BaseModel):
     user_id: str
     content: str
     emotions: Dict[str, int] | None = None
+
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "user_id": "abc123",
+                "content": "this is a journal entry",
+                "emotions": {
+                    "sadness": 1,
+                    "joy": 4
+                }
+            }
+        }
+    }

@@ -8,6 +8,9 @@ router = APIRouter()
 
 @router.get("/journals/user/{user_id}")
 async def get_journals(user_id: str):
+    """
+    Retrieves all journals for a user given an input user_id.
+    """
     # parse date to datetime object
     journals = list(db.journals.find({"user_id": user_id}))
 
@@ -16,6 +19,10 @@ async def get_journals(user_id: str):
 
 @router.post("/journals")
 async def create_journal(journal: Journal):
+    """
+    Creates a journal entry given a Journal object. \n
+    Date is auto-generated based on the current time.
+    """
     document = journal.model_dump()
     document.update({"date": str(datetime.now(timezone.utc))})
     #document.update({"date": str(journal.date)})
@@ -32,6 +39,9 @@ async def update_journal(journal_id: str, journal: dict):
 
 @router.delete("/journals/{journal_id}")
 async def delete_journal(journal_id: str):
+    """
+    Deletes a journal entry given an input journal_id.
+    """
     if not db.journals.find_one({"_id": journal_id}):
         return {"message": "Journal not found"}
     db.journals.delete_one({"_id": journal_id})
@@ -39,6 +49,13 @@ async def delete_journal(journal_id: str):
 
 @router.post("/journals/search")
 async def search_journals(journal_search: JournalSearch):
+    """
+    Searches for journals based on the input JournalSearch object. \n
+    If date_exact is provided, `date_start` and `date_end` are overrided. \n
+    Either `date_start` or date_end can be provided, if one is not, the range will be unbounded.
+    e.g. if `date_start` is provided and `date_end` is not, all journals after that date will be returned. \n
+    `query_type` can be either "gte" or "lte" to specify greater than or less than or equal to the count.
+    """
     query = {}
     # date range queries
     if journal_search.date_exact:
@@ -63,6 +80,3 @@ async def search_journals(journal_search: JournalSearch):
     journals = list(db.journals.find(query))
     journals = [serialize_ids(journal) for journal in journals]
     return {"journals": journals}
-
-# generate a script that will insert test data to the journals collection
-# with multiple different dates, user_ids, and content using the current time then adding a timedelta

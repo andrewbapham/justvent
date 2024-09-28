@@ -1,17 +1,25 @@
 from fastapi import APIRouter, Query
 from database import db
 from datetime import datetime, timedelta, timezone
-from typing import Annotated
+from typing import Annotated, Dict
 import collections
 
 from models.user_types import DateLength, EmotionDateRange
 
 router = APIRouter()
 
-
-
 @router.get("/users/emotions/{user_id}")
-async def get_user_emotions(user_id: str, date_query: Annotated[EmotionDateRange, Query()]):
+async def get_user_emotions(user_id: str, date_query: Annotated[EmotionDateRange, Query()]) -> Dict[str, float]:
+    """
+    Returns the average value of each emotion for a user within a given date range.
+    Acceptable date ranges are:
+    - `"day"`
+    - `"week"`
+    - `"month"`
+    - `"year"`
+
+    The date range is inclusive of the start date and exclusive of the end date.
+    """
     # Get date range
     start_date = date_query.start_date.replace(microsecond=0, second=0, minute=0, hour=0)
     
