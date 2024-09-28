@@ -19,18 +19,20 @@ function Home() {
   });
 
   return (
-    <Center bg="#fefae0" w={"100vw"} h={"180vh"} className="hide-scroll-bar">
+    <Center bg="#fefae0" w={"100vw"} h={"300vh"} className="hide-scroll-bar">
       <section
         style={{
-          position: "relative",
+          position: "absolute",
           display: "flex",
+          height:"300vh",
+          width:"100vw",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "flex-start",
-          paddingTop: "2em",
+          overflow:"hidden",
         }}
       >
-        <Flex direction="row" align="center" justify="center" p="lg" mb="lg">
+        <Flex direction="row" align="center" justify="center" w={"100%"} h={"40%"} pt="lg" pb="lg">
           {/* Text and Button in a column */}
           <Box display="flex" flexDirection="column" alignItems="flex-start" mr="xl">
           
@@ -54,8 +56,17 @@ function Home() {
 
           />
         </Flex>
+
+        {/* Flex Container for Title and Paragraph */}
+        <Flex direction="column" align="center" justify="center" p="15vh 5vh" h={"30%"} w={"100%"} bg={"#fff"}>
+          <Title order={2} size={32} style={{ marginBottom: "1em", textAlign: "center" }}>
+            Discover the power of Daily Jounaling
+          </Title>
+          <p style={{ textAlign: "center", fontSize: "18px", color: "#333" }}>
+          Daily journaling is a powerful practice that provides a safe space for emotional release and self-reflection. By putting pen to paper, we can untangle complex feelings, clarify our thoughts, and gain insights into our experiences. With JustVent, you can enhance this experience even further; the app uses AI to analyze your entries, providing insights into your emotional patterns and helping you track your growth over time.</p>
+        </Flex>
        
-        <Flex direction="row-reverse" align="center" justify="space-between" p="3em" mt="10em" w={"80%"} onMouseOver={
+        <Flex direction="row-reverse" align="center" justify="space-between" p="3em" h="40%" w={"100%"} onMouseOver={
           () => {setAnimation({ ...animation, opacity: 1, left: "180px", width: "350px" });
            setbtnOpacity(1);
           }}>
@@ -85,8 +96,6 @@ function Home() {
           
         </Flex>
       </section>
-
-
 
       {/* Define the keyframes for the spin animation */}
       <style>
