@@ -1,7 +1,6 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  text-align: center;
 }
 
 .logo {
@@ -44,6 +43,6 @@
   object-fit: cover;
 }
 
-.hide-scroll-bar{
+.hide-scroll-bar {
   overflow-x: hidden;
 }
