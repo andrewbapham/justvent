@@ -39,3 +39,11 @@
 .read-the-docs {
   color: #888;
 }
+
+.wrap {
+  object-fit: cover;
+}
+
+.hide-scroll-bar{
+  overflow-x: hidden;
+}

@@ -32,7 +32,12 @@ function NavBar() {
           >
             Dashboard
           </UnstyledButton>
-          <UnstyledButton style={{ padding: "8px" }}>Sign In</UnstyledButton>
+          <UnstyledButton
+           onClick={() => navigate("/signin")}
+           style={{ padding: "8px" }}
+           >
+            Sign In
+          </UnstyledButton>
         </Group>
       </Group>
     </Group>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Textarea, TextInput, Button, Card, Title, Stack } from '@mantine/core';
+import { Container, Textarea, TextInput, Button, Card, Title, Stack, Center } from '@mantine/core';
 
 const Journal = () => {
   const [title, setTitle] = useState('');
@@ -19,6 +19,8 @@ const Journal = () => {
   };
 
   return (
+    
+    <Center bg='#FEFAE0' w={"100vw"} h={"100vh"}>
     <Container size="md" style={{ marginTop: '20px', paddingTop: '10em' }}>
      
       <Card shadow="sm" padding="lg" mb="lg">
@@ -70,6 +72,7 @@ const Journal = () => {
         )}
       </Stack>
     </Container>
+    </Center>
   );
 };
 

@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Journal from "./pages/Journal";
 import NavBar from "../src/components/NavBar";
+import Signin from "./pages/SignIn";
 
 import "./App.css";
 
@@ -30,6 +31,7 @@ function App() {
             {/* <AuthRoute path="/settings" element={<Settings />} /> */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/journal" element={<Journal />} />
+            <Route path="/signin" element={<Signin />} />
             {/* <Route path="/profile/:username" element={<Profile />} /> */}
             {/* <AuthRoute path="/@:username" element={<Profile />} /> */}
           </Routes>
