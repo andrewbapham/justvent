@@ -3,8 +3,10 @@ from database import db
 from datetime import datetime, timezone
 from models.journal_types import Journal, JournalSearch
 from util.mongo_utils import serialize_ids
+from tools.emotion_detection import EmotionDetection
 
 router = APIRouter()
+detector = EmotionDetection()
 
 @router.get("/journals/user/{user_id}")
 async def get_journals(user_id: str):
@@ -25,6 +27,7 @@ async def create_journal(journal: Journal):
     """
     document = journal.model_dump()
     document.update({"date": str(datetime.now(timezone.utc))})
+    document.update({"emotions": {"joy": 2}})
     #document.update({"date": str(journal.date)})
     journal_id = db.journals.insert_one(document).inserted_id
     return {
