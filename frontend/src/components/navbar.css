@@ -1,7 +1,6 @@
 /* Style the unstyled button */
 .custom-button {
-  padding: 10px 20px;
-  background-color: #007BFF; /* Background color */
+  background-color: #007bff; /* Background color */
   color: rgb(0, 0, 0); /* Text color */
   border: none; /* Remove border */
   border-radius: 5px; /* Rounded corners */

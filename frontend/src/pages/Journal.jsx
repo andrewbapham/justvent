@@ -2,20 +2,40 @@ import React, { useState } from "react";
 import {
   Textarea,
   TextInput,
+  Text,
   Button,
   Card,
   Title,
   Stack,
   Center,
+  Flex,
+  Modal,
 } from "@mantine/core";
+import { Carousel } from "@mantine/carousel";
+import { useDisclosure } from "@mantine/hooks";
 
 import { JournalEntry } from "../components/JournalEntry";
 
 const Journal = () => {
+  const [opened, { open, close }] = useDisclosure(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [prompt, setPrompt] = useState("");
   const [errors, setErrors] = useState({ title: false, content: false });
   const [journals, setJournals] = useState([]);
+
+  // Define default writing prompts
+  const prompts = [
+    "What made me smile today?",
+    "Three things I’m grateful for right now.",
+    "What is one accomplishment I’m proud of recently?",
+    "Who is someone I appreciate, and why?",
+    "What is a goal I can work towards this month?",
+  ];
+
+  const handleGetPrompt = () => {
+    setPrompt(prompts[Math.floor(Math.random() * prompts.length)]);
+  };
 
   const handleAddJournal = () => {
     const newErrors = { title: false, content: false };
@@ -43,101 +63,90 @@ const Journal = () => {
       bg="#FEFAE0"
       w={"100vw"}
       h={"100vh"}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
+      style={{ display: "flex", flexDirection: "column" }}
     >
-      <div
-        style={{
-          height: "90vh",
-          paddingTop: "10vh",
-          paddingBottom: "5vh",
-          overflowY: "scroll",
-        }}
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="New Journal Entry"
+        size={"100%"}
       >
-        <Card
-          shadow="sm"
-          padding="lg"
-          radius={10}
-          mb="lg"
-          w={"90vw"}
-          mih={"370px"}
-          style={{ alignItems: "flex-start" }}
-        >
-          <div
-            style={{
-              clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 50% 90%, 0 100%)",
-              position: "absolute",
-              top: 0,
-              right: 25,
-              width: "40px",
-              height: "60px",
-              backgroundColor: "red",
-            }}
-          ></div>
+        <TextInput
+          label="Title"
+          placeholder="Enter your Title"
+          value={title}
+          onChange={(event) => setTitle(event.currentTarget.value)}
+          required
+          error={errors.title && !title}
+          mb="md"
+          w={"100%"}
+          style={{ alignSelf: "flex-start" }}
+        />
 
-          <Title order={2} align="center" mb="xl">
-            New Journal Entry
-          </Title>
-
-          <TextInput
-            label="Title"
-            placeholder="Enter your Title"
-            value={title}
-            onChange={(event) => setTitle(event.currentTarget.value)}
-            required
-            error={errors.title && !title}
-            mb="md"
-            w={"100%"}
-            style={{ alignSelf: "flex-start" }}
-          />
-
-          <Textarea
-            label="My Story"
-            placeholder="How are you feeling Today"
-            value={content}
-            onChange={(event) => setContent(event.currentTarget.value)}
-            autosize
-            minRows={4}
-            required
-            error={errors.content && !content}
-            mb="md"
-            w={"100%"}
-          />
-
+        <Flex align={"center"} pb={"md"} gap={8}>
           <Button
-            onClick={handleAddJournal}
+            onClick={handleGetPrompt}
             style={{ backgroundColor: "#CCD5AE" }}
-            fullWidth
+            w={"200px"}
           >
-            Add Journal Entry
+            Give me a Prompt
           </Button>
-        </Card>
+          <Text>{prompt}</Text>
+        </Flex>
 
-        {/* Past Journal Entries Section */}
-        <Title order={3} align="center" mt="xl" mb="lg">
-          Past Journal Entries
-        </Title>
+        <Textarea
+          label="My Story"
+          placeholder="How are you feeling Today"
+          value={content}
+          onChange={(event) => setContent(event.currentTarget.value)}
+          required
+          error={errors.content && !content}
+          mb="md"
+          w={"100%"}
+          h={"50vh"}
+          styles={{ wrapper: { height: "100%" }, input: { height: "100%" } }}
+        />
 
-        <Stack spacing="md">
-          {journals.length > 0 ? (
-            journals.map((journal) => (
+        <Button
+          onClick={handleAddJournal}
+          style={{ backgroundColor: "#CCD5AE" }}
+          mt={"50px"}
+          fullWidth
+        >
+          Add Journal Entry
+        </Button>
+      </Modal>
+      <Button
+        onClick={open}
+        style={{ position: "absolute", top: 100, right: 20 }}
+      >
+        Write a new Entry
+      </Button>
+
+      {/* Past Journal Entries Section */}
+      <Title order={3} align="center" mt="xl" mb="lg">
+        Past Journal Entries
+      </Title>
+
+      {journals.length > 0 ? (
+        <Carousel slideGap="md" controlsOffset="xs" w={"80vw"}>
+          {journals.map((journal) => (
+            <Carousel.Slide>
               <JournalEntry
                 id={journal.id}
                 title={journal.title}
                 content={journal.content}
                 date={journal.date}
               />
-            ))
-          ) : (
-            <p>
-              No journal entries created yet. Start writing your first journal
-              entry above!
-            </p>
-          )}
-        </Stack>
-      </div>
+            </Carousel.Slide>
+          ))}
+        </Carousel>
+      ) : (
+        <p>
+          No journal entries created yet. Start writing your first journal entry
+          above!
+        </p>
+      )}
     </Center>
   );
 };

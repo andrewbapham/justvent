@@ -1,18 +1,30 @@
-import { Card, Title, Text } from "@mantine/core";
-import "./styles.css";
+import { Card, Title, Text, Flex } from "@mantine/core";
 
 export function JournalEntry({ id, title, content, date }) {
   return (
-    <Card key={id} shadow="sm" padding="lg" className="journal_entry">
-      <Title order={3}>{title}</Title>
-      <div style={{ paddingTop: "10px", paddingBottom: "10px" }}>
-        <Text size="md" c="gray.7">
+    <Card key={id} shadow="sm" padding="lg" style={{ overflowY: "scroll" }}>
+      <Flex justify={"space-between"}>
+        <Title order={3}>{title}</Title>
+        <Text>{date}</Text>
+      </Flex>
+      <div
+        style={{
+          paddingTop: "10px",
+          paddingBottom: "10px",
+          backgroundColor: "white",
+          height: "60vh",
+        }}
+      >
+        <Text
+          size="md"
+          c="gray.7"
+          px={"30px"}
+          py={"10px"}
+          style={{ overflowY: scroll }}
+        >
           {content}
         </Text>
       </div>
-      <p>
-        <em>{date}</em>
-      </p>
     </Card>
   );
 }
