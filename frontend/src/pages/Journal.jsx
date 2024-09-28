@@ -64,6 +64,18 @@ const Journal = () => {
           mih={"370px"}
           style={{ alignItems: "flex-start" }}
         >
+          <div
+            style={{
+              clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 50% 90%, 0 100%)",
+              position: "absolute",
+              top: 0,
+              right: 25,
+              width: "40px",
+              height: "60px",
+              backgroundColor: "red",
+            }}
+          ></div>
+
           <Title order={2} align="center" mb="xl">
             New Journal Entry
           </Title>
