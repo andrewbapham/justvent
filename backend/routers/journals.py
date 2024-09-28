@@ -18,6 +18,7 @@ async def get_journals(user_id: str):
 async def create_journal(journal: Journal):
     document = journal.model_dump()
     document.update({"date": str(datetime.now(timezone.utc))})
+    #document.update({"date": str(journal.date)})
     journal_id = db.journals.insert_one(document).inserted_id
     return {
         "message": "Journal created", 
@@ -31,6 +32,8 @@ async def update_journal(journal_id: str, journal: dict):
 
 @router.delete("/journals/{journal_id}")
 async def delete_journal(journal_id: str):
+    if not db.journals.find_one({"_id": journal_id}):
+        return {"message": "Journal not found"}
     db.journals.delete_one({"_id": journal_id})
     return {"message": "Journal deleted"}
 
@@ -60,3 +63,6 @@ async def search_journals(journal_search: JournalSearch):
     journals = list(db.journals.find(query))
     journals = [serialize_ids(journal) for journal in journals]
     return {"journals": journals}
+
+# generate a script that will insert test data to the journals collection
+# with multiple different dates, user_ids, and content using the current time then adding a timedelta
