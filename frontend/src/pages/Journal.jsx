@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Textarea,
   TextInput,
@@ -33,9 +34,26 @@ const Journal = () => {
     "What is a goal I can work towards this month?",
   ];
 
+  const axiosClient = axios.create({
+    baseURL: "http://justvent-lb-516258045.us-east-2.elb.amazonaws.com/api/v1/",
+    timeout: 1000,
+    headers: { "Access-Control-Allow-Origin": "*" },
+  });
+
+  useEffect(() => {
+    const fetchJournals = async () => {
+      const result = await axiosClient.get(`journals/user/user_001`);
+      console.log(result);
+    };
+
+    fetchJournals();
+  }, []);
+
   const handleGetPrompt = () => {
     setPrompt(prompts[Math.floor(Math.random() * prompts.length)]);
   };
+
+  const postJournalEntry = () => {};
 
   const handleAddJournal = () => {
     const newErrors = { title: false, content: false };

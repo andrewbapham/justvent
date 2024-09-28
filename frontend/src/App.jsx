@@ -3,9 +3,10 @@ import "@mantine/core/styles.css";
 import { AppShell } from "@mantine/core";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/components/Dashboard/Dashboard";
 import Journal from "./pages/Journal";
 import NavBar from "../src/components/NavBar";
+
 import Signin from "./pages/SignIn";
 
 import "./App.css";
