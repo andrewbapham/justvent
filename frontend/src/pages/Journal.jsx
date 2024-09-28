@@ -59,7 +59,7 @@ const Journal = () => {
         <Card
           shadow="sm"
           padding="lg"
-          radius={20}
+          radius={10}
           mb="lg"
           w={"90vw"}
           mih={"370px"}
