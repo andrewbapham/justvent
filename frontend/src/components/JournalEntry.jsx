@@ -1,4 +1,5 @@
 import { Card, Text, Flex, ActionIcon } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { AiOutlineDelete } from "react-icons/ai";
 import axios from "axios";
 
@@ -20,9 +21,22 @@ export function JournalEntry({ id, content, emotions, date }) {
   });
 
   const handleDeleteJournal = async () => {
-    await axiosClient.delete(`journals/${id}`).then((res) => {
-      console.log(res);
-    });
+    await axiosClient
+      .delete(`journals/${id}`)
+      .then((res) => {
+        notifications.show({
+          title: "Successfully deleted entry.",
+          message: "Refresh to view changes",
+          color: "green",
+        });
+      })
+      .catch(() => {
+        notifications.show({
+          title: "Failed to delete entry.",
+          message: "Please try again later",
+          color: "red",
+        });
+      });
   };
 
   return (

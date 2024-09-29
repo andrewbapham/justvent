@@ -14,6 +14,7 @@ import {
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { FaSearch } from "react-icons/fa";
 
 import { JournalEntry } from "../components/JournalEntry";
@@ -41,7 +42,7 @@ const Journal = () => {
 
   const axiosClient = axios.create({
     baseURL: "http://justvent-lb-516258045.us-east-2.elb.amazonaws.com/api/v1/",
-    timeout: 20000,
+    timeout: 15000,
     headers: { "Access-Control-Allow-Origin": "*" },
   });
 
@@ -64,6 +65,11 @@ const Journal = () => {
   };
 
   const handleAddJournal = async () => {
+    notifications.show({
+      title: "Creating entry....",
+      color: "blue",
+      loading: true,
+    });
     const newErrors = { content: false };
     if (content) {
       const newJournal = {
@@ -71,10 +77,24 @@ const Journal = () => {
         content,
         date: new Date().toLocaleDateString(),
       };
-      await axiosClient.post(`journals`, {
-        content: content,
-        user_id: "user_001",
-      });
+      await axiosClient
+        .post(`journals`, {
+          content: content,
+          user_id: "user_001",
+        })
+        .then((res) => {
+          notifications.show({
+            title: "Successfully created entry.",
+            color: "green",
+          });
+        })
+        .catch(() => {
+          notifications.show({
+            title: "Failed to create entry.",
+            message: "Please try again later",
+            color: "red",
+          });
+        });
       setJournals([newJournal, ...journals]);
       setContent("");
       setErrors(newErrors);
