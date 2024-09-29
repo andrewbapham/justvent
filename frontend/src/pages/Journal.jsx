@@ -15,7 +15,7 @@ import {
 import { Carousel } from "@mantine/carousel";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaMicrophone } from "react-icons/fa";
 
 import { JournalEntry } from "../components/JournalEntry";
 
@@ -132,6 +132,10 @@ const Journal = () => {
           </Button>
           <Text>{prompt}</Text>
         </Flex>
+
+        <Button rightSection={<FaMicrophone size={14} />} mb={"md"}>
+          Speech to Text
+        </Button>
 
         <Textarea
           label="My Story"
