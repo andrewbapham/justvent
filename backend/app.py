@@ -7,11 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-origins = [
-    "http://localhost:5173",
-    "http://localhost",
-    "http://localhost:5174",
-]
+origins = ["*"]
 
 tags_metadata = [
     {"name": "journals", "description": "Operations with journals."},
