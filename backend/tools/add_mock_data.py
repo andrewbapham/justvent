@@ -35,7 +35,7 @@ journal_entries = [
 ]
 
 data = [{
-        "user_id": "user_001",
+        "user_id": "user_002",
         "content": journal_entries[i],
         "emotions": detector.getEmotions(journal_entries[i]),
         "date": str(start_date + timedelta(days=i))

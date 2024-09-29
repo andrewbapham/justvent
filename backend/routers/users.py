@@ -52,4 +52,4 @@ async def get_user_emotions(
     for emotion, value in emotions.items():
         emotions[emotion] = value / len(journals)
 
-    return emotions
+    return {"message": "Success"}
