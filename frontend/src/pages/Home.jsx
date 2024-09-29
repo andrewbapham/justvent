@@ -34,11 +34,19 @@ function Home() {
       >
         <Flex direction="row" align="center" justify="center" w={"100%"} h={"40%"} pt="lg" pb="lg">
           {/* Text and Button in a column */}
-          <Box display="flex" flexDirection="column" alignItems="flex-start" mr="xl">
-          
-            <Title
+          <Box mr="xl">
+
+          <Title
               order={1}
-              size={48}
+              size={100}
+              style={{ lineHeight: "1.2"}}
+            >
+              JustVent
+              <br />
+            </Title>
+            <Title
+              order={2}
+              size={20}
               style={{ lineHeight: "1.2", marginBottom: "1em" }} 
             >
               Feel heard at <i>Anytime</i>,<i> Anywhere</i>, <i>Anyplace</i>
@@ -59,7 +67,7 @@ function Home() {
 
         {/* Flex Container for Title and Paragraph */}
         <Flex direction="column" align="center" justify="center" p="15vh 5vh" h={"30%"} w={"100%"} bg={"#fff"}>
-          <Title order={2} size={32} style={{ marginBottom: "1em", textAlign: "center" }}>
+          <Title order={2} size={32} className={"archivo-black-regular"} style={{ marginBottom: "1em", textAlign: "center" }}>
             Discover the power of Daily Jounaling
           </Title>
 
@@ -104,9 +112,17 @@ function Home() {
       {/* Define the keyframes for the spin animation */}
       <style>
         {`
+          @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
           @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+          }
+
+          .archivo-black-regular {
+            font-family: "Archivo Black", sans-serif;
+            font-weight: 400;
+            font-style: normal;
           }
 
           #btn-signin:hover {
