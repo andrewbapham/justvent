@@ -19,10 +19,9 @@ import { JournalEntry } from "../components/JournalEntry";
 
 const Journal = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [prompt, setPrompt] = useState("");
-  const [errors, setErrors] = useState({ title: false, content: false });
+  const [errors, setErrors] = useState({ content: false });
   const [journals, setJournals] = useState([]);
 
   // Define default writing prompts
@@ -41,14 +40,16 @@ const Journal = () => {
 
   const axiosClient = axios.create({
     baseURL: "http://justvent-lb-516258045.us-east-2.elb.amazonaws.com/api/v1/",
-    timeout: 1000,
+    timeout: 20000,
     headers: { "Access-Control-Allow-Origin": "*" },
   });
 
   useEffect(() => {
     const fetchJournals = async () => {
       const result = await axiosClient.get(`journals/user/user_001`);
-      setJournals(result.data.journals);
+      const recentResults = result.data.journals.reverse();
+      setJournals(recentResults);
+      console.log(recentResults);
     };
 
     fetchJournals();
@@ -63,11 +64,10 @@ const Journal = () => {
   };
 
   const handleAddJournal = async () => {
-    const newErrors = { title: false, content: false };
-    if (title && content) {
+    const newErrors = { content: false };
+    if (content) {
       const newJournal = {
         id: Date.now(),
-        title,
         content,
         date: new Date().toLocaleDateString(),
       };
@@ -76,19 +76,15 @@ const Journal = () => {
         user_id: "user_001",
       });
       setJournals([newJournal, ...journals]);
-      setTitle("");
       setContent("");
       setErrors(newErrors);
       close();
     } else {
-      const newErrors = { title: false, content: false };
-      !title ? (newErrors.title = true) : (newErrors.title = false);
+      const newErrors = { content: false };
       !content ? (newErrors.content = true) : (newErrors.content = false);
       setErrors(newErrors);
     }
   };
-
-  const handleDeleteJournal = async () => {};
 
   return (
     <Center
@@ -103,18 +99,6 @@ const Journal = () => {
         title="New Journal Entry"
         size={"100%"}
       >
-        <TextInput
-          label="Title"
-          placeholder="Enter your Title"
-          value={title}
-          onChange={(event) => setTitle(event.currentTarget.value)}
-          required
-          error={errors.title && !title}
-          mb="md"
-          w={"100%"}
-          style={{ alignSelf: "flex-start" }}
-        />
-
         <Flex align={"center"} pb={"md"} gap={8}>
           <Button
             onClick={handleGetPrompt}
@@ -166,9 +150,9 @@ const Journal = () => {
           {journals.map((journal) => (
             <Carousel.Slide>
               <JournalEntry
-                id={journal.id}
-                title={journal.title}
+                id={journal._id}
                 content={journal.content}
+                emotions={journal.emotions !== "None" && journal.emotions}
                 date={journal.date}
               />
             </Carousel.Slide>
