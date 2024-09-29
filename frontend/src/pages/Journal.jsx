@@ -14,15 +14,16 @@ import {
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
+import { FaSearch } from "react-icons/fa";
 
 import { JournalEntry } from "../components/JournalEntry";
 
 const Journal = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [prompt, setPrompt] = useState("");
-  const [errors, setErrors] = useState({ title: false, content: false });
+  const [errors, setErrors] = useState({ content: false });
   const [journals, setJournals] = useState([]);
 
   // Define default writing prompts
@@ -41,14 +42,15 @@ const Journal = () => {
 
   const axiosClient = axios.create({
     baseURL: "http://justvent-lb-516258045.us-east-2.elb.amazonaws.com/api/v1/",
-    timeout: 1000,
+    timeout: 15000,
     headers: { "Access-Control-Allow-Origin": "*" },
   });
 
   useEffect(() => {
     const fetchJournals = async () => {
       const result = await axiosClient.get(`journals/user/user_001`);
-      console.log(result);
+      const recentResults = result.data.journals.reverse();
+      setJournals(recentResults);
     };
 
     fetchJournals();
@@ -62,30 +64,43 @@ const Journal = () => {
     setPrompt(prompts[promptNum]);
   };
 
-  const postJournalEntry = () => {};
-
   const handleAddJournal = async () => {
-    const newErrors = { title: false, content: false };
-    if (title && content) {
+    notifications.show({
+      title: "Creating entry....",
+      color: "blue",
+      loading: true,
+    });
+    const newErrors = { content: false };
+    if (content) {
       const newJournal = {
         id: Date.now(),
-        title,
         content,
         date: new Date().toLocaleDateString(),
       };
-      await axiosClient.post(`journals`, {
-        content: content,
-        emotions: {},
-        user_id: "user_001",
-      });
+      await axiosClient
+        .post(`journals`, {
+          content: content,
+          user_id: "user_001",
+        })
+        .then((res) => {
+          notifications.show({
+            title: "Successfully created entry.",
+            color: "green",
+          });
+        })
+        .catch(() => {
+          notifications.show({
+            title: "Failed to create entry.",
+            message: "Please try again later",
+            color: "red",
+          });
+        });
       setJournals([newJournal, ...journals]);
-      setTitle("");
       setContent("");
       setErrors(newErrors);
       close();
     } else {
-      const newErrors = { title: false, content: false };
-      !title ? (newErrors.title = true) : (newErrors.title = false);
+      const newErrors = { content: false };
       !content ? (newErrors.content = true) : (newErrors.content = false);
       setErrors(newErrors);
     }
@@ -104,18 +119,6 @@ const Journal = () => {
         title="New Journal Entry"
         size={"100%"}
       >
-        <TextInput
-          label="Title"
-          placeholder="Enter your Title"
-          value={title}
-          onChange={(event) => setTitle(event.currentTarget.value)}
-          required
-          error={errors.title && !title}
-          mb="md"
-          w={"100%"}
-          style={{ alignSelf: "flex-start" }}
-        />
-
         <Flex align={"center"} pb={"md"} gap={8}>
           <Button
             onClick={handleGetPrompt}
@@ -150,26 +153,29 @@ const Journal = () => {
         </Button>
       </Modal>
 
-      <Button
-        onClick={open}
-        style={{ position: "absolute", top: 100, right: 20 }}
-      >
-        Write a new Entry
-      </Button>
-
-      {/* Past Journal Entries Section */}
-      <Title order={1} align="center" mt="xl" mb="lg">
-        Past Journal Entries
-      </Title>
+      <Flex align="center" justify="space-between" w={"80vw"}>
+        {/* Past Journal Entries Section */}
+        <Title order={1} align="center" mt="xl" mb="lg">
+          Past Journal Entries
+        </Title>
+        <Flex gap={10}>
+          <TextInput
+            leftSectionPointerEvents="none"
+            leftSection={<FaSearch size={20} />}
+            placeholder="Search"
+          />
+          <Button onClick={open}>Write a new Entry</Button>
+        </Flex>
+      </Flex>
 
       {journals.length > 0 ? (
         <Carousel slideGap="md" controlsOffset="xs" w={"80vw"}>
           {journals.map((journal) => (
             <Carousel.Slide>
               <JournalEntry
-                id={journal.id}
-                title={journal.title}
+                id={journal._id}
                 content={journal.content}
+                emotions={journal.emotions !== "None" && journal.emotions}
                 date={journal.date}
               />
             </Carousel.Slide>
