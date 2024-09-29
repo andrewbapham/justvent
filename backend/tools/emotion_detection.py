@@ -7,7 +7,7 @@ class EmotionDetection:
 
     def __init__(self):
         # download pre-trained emotion classification model
-        self.model = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base") # Pytorch 
+        self.model = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base", top_k=None) # Pytorch 
         self.df = pd.DataFrame() # Pandas Dataframe
 
     def processText(self, text: str) -> None:
