@@ -45,8 +45,13 @@ async def delete_journal(journal_id: str):
     """
     Deletes a journal entry given an input journal_id.
     """
-    if not db.journals.find_one({"_id": journal_id}):
-        return {"message": "Journal not found"}
+    # Convert journal_id to ObjectId
+    try:
+        obj_id = ObjectId(journal_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid journal ID format")
+    if not db.journals.find_one({"_id": obj_id}):
+        return {"message": db.journals}
     db.journals.delete_one({"_id": journal_id})
     return {"message": "Journal deleted"}
 
