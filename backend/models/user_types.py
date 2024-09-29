@@ -11,4 +11,4 @@ class DateLength(Enum):
 
 class EmotionDateRange(BaseModel):
     range_type: Literal["day", "week", "month", "year"] | None = None
-    start_date: datetime
+    start_date: str

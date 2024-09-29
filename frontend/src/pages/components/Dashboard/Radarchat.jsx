@@ -1,32 +1,35 @@
 import React from 'react';
-import { RadarChart as MantineRadarChart } from '@mantine/charts';
 import { Card, Title as MantineTitle } from '@mantine/core';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 
-const Radarchart = () => {
-  const data = [
-    { product: 'Anger', sales: 80 },
-    { product: 'Disgust', sales: 30 },
-    { product: 'Fear', sales: 90 },
-    { product: 'Sadness', sales: 20 },
-    { product: 'Neutral', sales: 50 },
-    { product: 'Joy', sales: 70 },
-    { product: 'Surprise', sales: 40 },
-  ];
+const Radarchart = ({ data }) => {
+  // Transform the received data into the format needed for the RadarChart
+  const radarChartData = data
+    ? Object.keys(data).map((emotion) => ({
+        emotion: emotion.charAt(0).toUpperCase() + emotion.slice(1),
+        level: data[emotion],
+      }))
+    : [];
 
   return (
-    <Card shadow="sm" padding="lg" id="maincard">
+    <Card shadow="sm" padding="lg" radius="md" withBorder style={{ height: "100%", backgroundColor: "white" }}>
       <MantineTitle order={2} align="center" mb="xl">
-        How You're Feeling...
+        Emotional Radar
       </MantineTitle>
-      <MantineRadarChart
-        h={300} 
-        w={400} 
-        data={data}
-        dataKey="product"
-        padding={80}
-        series={[{ name: 'sales', color: 'blue.4', opacity: 0.2 }]}
-        axislabels={{ fontSize: 1 }} 
-      />
+
+      {/* Render the radar chart only if radarChartData has entries */}
+      {radarChartData.length > 0 ? (
+        <ResponsiveContainer width="100%" height={300}>
+          <RadarChart outerRadius="80%" data={radarChartData}>
+            <PolarGrid />
+            <PolarAngleAxis dataKey="emotion" />
+            <PolarRadiusAxis />
+            <Radar name="Level" dataKey="level" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+          </RadarChart>
+        </ResponsiveContainer>
+      ) : (
+        <p style={{ textAlign: 'center' }}>No data available</p>
+      )}
     </Card>
   );
 };

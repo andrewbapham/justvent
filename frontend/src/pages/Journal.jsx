@@ -184,7 +184,10 @@ const Journal = () => {
               <JournalEntry
                 id={journal._id}
                 content={journal.content}
-                emotions={journal.emotions !== "None" && journal.emotions}
+                emotions={
+                  journal.emotions !== "None" &&
+                  JSON.parse(journal.emotions.replace(/'/g, '"'))
+                }
                 date={journal.date}
               />
             </Carousel.Slide>
