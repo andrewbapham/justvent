@@ -17,6 +17,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { FaSearch, FaMicrophone } from "react-icons/fa";
 
+import useSpeechToText from "../hooks/useSpeechToText";
 import { JournalEntry } from "../components/JournalEntry";
 
 const Journal = () => {
@@ -45,6 +46,22 @@ const Journal = () => {
     timeout: 15000,
     headers: { "Access-Control-Allow-Origin": "*" },
   });
+
+  const { isRecording, transcript, startRecording, stopRecording } =
+    useSpeechToText({ continuous: true });
+
+  const toggleListening = () => {
+    isRecording ? stopVoiceInput() : startRecording();
+  };
+
+  const stopVoiceInput = () => {
+    setContent(
+      (prevVal) =>
+        prevVal +
+        (transcript.length ? (prevVal.length ? " " : "") + transcript : "")
+    );
+    stopRecording();
+  };
 
   useEffect(() => {
     const fetchJournals = async () => {
@@ -133,14 +150,29 @@ const Journal = () => {
           <Text>{prompt}</Text>
         </Flex>
 
-        <Button rightSection={<FaMicrophone size={14} />} mb={"md"}>
-          Speech to Text
+        <Button
+          rightSection={<FaMicrophone size={14} />}
+          mb={"md"}
+          style={{
+            backgroundColor: isRecording ? "red" : "blue",
+          }}
+          onClick={() => toggleListening()}
+        >
+          {isRecording ? "Stop Listening" : "Speech to Text"}
         </Button>
 
         <Textarea
           label="My Story"
           placeholder="How are you feeling Today"
-          value={content}
+          disabled={isRecording}
+          value={
+            isRecording
+              ? content +
+                (transcript.length
+                  ? (content.length ? " " : "") + transcript
+                  : "")
+              : content
+          }
           onChange={(event) => setContent(event.currentTarget.value)}
           required
           error={errors.content && !content}
