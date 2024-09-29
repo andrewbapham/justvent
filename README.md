@@ -24,6 +24,22 @@ We split each journal entry by sentence, then classify each emotion detected by 
 
 The client application connects to our backend through AWS Elastic Load Balancers, where our main backend is hosted on an EC2 instance. The EC2 instance communicates with an AWS DocumentDB cluster, which contains the main application data. The text vector embeddings are managed by a microservice powered by AWS Lambda; utilizing a third-party LLM-based embedding model, and storing and querying high-dimension-space vector embeddings in Amazon RDS using PostgresQL with the pgvector extension.
 
+## Tech Stack
+- Frontend:
+  - React
+  - TailwindCSS
+  - Mantine UI
+- Backend:
+  - Python
+  - FastAPI
+  - Bash (deployment scripts)
+- Databases:
+  - MongoDB
+  - PostgresQL (with pgvector)
+- Infrastructure
+  - AWS (ELB, EC2, DocumentDB, Lambda, RDS)
+  - Nginx
+
 ## References
 <a id="1">[1]<a>
 https://huggingface.co/j-hartmann/emotion-english-distilroberta-base 
