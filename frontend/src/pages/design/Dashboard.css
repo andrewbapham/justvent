@@ -1,27 +1,26 @@
-/* Center the main container and ensure it covers the full viewport height */
+
 .fullscreen-center {
   width: 100vw;
-  min-height: 100vh; /* Ensures it covers the full viewport height */
+  min-height: 100vh; 
   background-color: #FEFAE0;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 2em;
   margin-top: 5rem;
-  overflow: hidden; /* Prevents scrolling when content fits */
+  overflow: hidden; 
 }
 
-/* Ensure the container width is consistent and adapts to screen size */
 .fullscreen-container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1200px; /* Controls max width on large screens */
+  max-width: 1200px; 
   height: auto;
-  margin-top: -5em;
+  margin-top: 0em;
 }
 
-/* Control the date input and range selector layout */
+
 .date-controls {
   display: flex;
   justify-content: space-between;
@@ -44,10 +43,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  justify-content: center; /* Ensures centered charts on large screens */
+  justify-content: center; 
 }
 
-/* Card title styling */
+
 .card-title {
   font-size: 35px;
   text-align: center;
@@ -75,14 +74,13 @@
   }
 }
 
-/* For title styling */
 #title {
-  text-align: center; /* Align title to the center */
+  text-align: center; 
   font-size: 3em;
-  margin: 0 auto; /* Center the title block */
+  margin: 0 auto; 
 }
 
-/* Current mood card styling */
+
 .current-mood-card {
   display: flex;
   flex-direction: column;
@@ -91,7 +89,6 @@
   height: 100%;
 }
 
-/* Media queries for responsive design */
 @media screen and (max-width: 768px) {
   .charts-grid {
     flex-direction: column; 

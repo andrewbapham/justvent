@@ -1,81 +1,70 @@
 import React, { useState } from "react";
 import {
   Container,
-  Textarea,
-  TextInput,
   Button,
   Card,
   Title,
-  Stack,
   Center,
 } from "@mantine/core";
-import new_make_logo from "../assets/new_make_logo_updated.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Initialize the navigate function
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Navigate to the dashboard page on form submission
+    navigate("/dashboard");
   };
 
   return (
-    <Center w={"199vh"} h={"110vh"} bg={"#f1f3e1"}>
+    <Center w={"100vw"} h={"100vh"} bg={"#FAEDCD"}> {/* Full page background color */}
       <Container
         align="center"
         size="md"
         style={{ marginTop: "20px", paddingTop: "5em" }}
       >
-        <Card shadow="sm" padding="lg" mb="lg" bg={"#E9EDC9"}>
-          <Title order={2} align="center">
+        <Card shadow="sm" padding="lg" mb="lg" bg={"#FAEDCD"}> {/* Form background color */}
+          <Title order={2} align="center" style={{ marginBottom: "20px" }}>
             Sign in or create your account
           </Title>
-          <div>
-            <img
-              src={new_make_logo}
-              alt="JustVent Logo"
-              className="wrap"
-              style={{
-                width: "200px",
-                height: "160px",
-                overflow: "hidden",
-                margin: "10px",
-              }}
-            />
-          </div>
 
           <form
             onSubmit={handleSubmit}
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "10px",
-              marginTop: "20px",
+              alignItems: "center", /* Center the form inputs */
+              gap: "20px", /* Larger gap for larger inputs */
+              marginTop: "30px",
             }}
           >
             <div
               style={{
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+                flexDirection: "column",
+                width: "80%", /* Center and limit form width */
                 marginBottom: "10px",
               }}
             >
-              <label style={{ marginRight: "10px", fontSize: "16px" }}>
+              <label style={{ marginBottom: "10px", fontSize: "18px" }}>
                 Email:
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
                 style={{
-                  padding: "7px 20px",
+                  padding: "15px 20px", /* Larger padding for larger input */
+                  fontSize: "16px",
                   border: "1px solid #5D8A2C",
-                  backgroundColor: "#f1f3e1",
+                  backgroundColor: "#ffffff", /* Input background color changed to white */
                   outline: "none",
-                  width: "60%",
+                  width: "100%",
+                  borderRadius: "5px",
                 }}
               />
             </div>
@@ -83,40 +72,42 @@ const Signin = () => {
             <div
               style={{
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+                flexDirection: "column",
+                width: "80%", /* Center and limit form width */
                 marginBottom: "10px",
               }}
             >
-              <label style={{ marginRight: "10px", fontSize: "16px" }}>
+              <label style={{ marginBottom: "10px", fontSize: "18px" }}>
                 Password:
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
                 style={{
-                  padding: "7px 20px",
+                  padding: "15px 20px", /* Larger padding for larger input */
+                  fontSize: "16px",
                   border: "1px solid #5D8A2C",
-                  backgroundColor: "#f1f3e1",
+                  backgroundColor: "#ffffff", /* Input background color changed to white */
                   outline: "none",
-                  width: "60%",
+                  width: "100%",
+                  borderRadius: "5px",
                 }}
               />
             </div>
-
             <Button
               type="submit"
-              id=".submit-button"
-              onClick={() => handleSubmit(e.target.value)}
               style={{
-                padding: "5px 30px",
-                backgroundColor: "#7e8f43",
-                border: "1px solid #5D8A2C",
-                width: "60%",
-                alignSelf: "center",
-                marginTop: "10px",
-                cursor: "pointer",
+                padding: "10px 20px", // Reduced padding to prevent text from being covered
+                backgroundColor: "#4CAF50", // Green background color
+                color: "#ffffff", // White text color for good contrast
+                border: "none", // Remove border for a cleaner look
+                fontSize: "18px", // Reasonable font size for visibility
+                fontWeight: "bold", // Bold text for better visibility
+                textAlign: "center", // Ensure the text is centered
+                borderRadius: "5px", // Rounded corners for better aesthetics
+                cursor: "pointer", // Add pointer cursor for better UX
               }}
             >
               Sign In
@@ -137,7 +128,7 @@ const Signin = () => {
       </Container>
       <style>
         {
-          ".wrap{object-fit: none;} .create-account {color: #7e8f43;text-align: center;font-size: 16px;} .create-account:hover {color: #bac985;text-decoration: underline;.hide-scroll-bar {overflow-x: hidden;}"
+          ".create-account {color: #7e8f43;text-align: center;font-size: 16px;} .create-account:hover {color: #bac985;text-decoration: underline;.hide-scroll-bar {overflow-x: hidden;} .submit-button:hover {background-color: #5D8A2C;} "
         }
       </style>
     </Center>

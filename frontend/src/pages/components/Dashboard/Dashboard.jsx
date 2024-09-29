@@ -12,6 +12,7 @@ import axios from "axios";
 import Radarchart from "./Radarchat";
 import EmotionPieChart from "./EmotionPieChart";
 import Barchart from "./Barchart";
+import Suggestions from "./Suggestions";
 import "../../design/Dashboard.css";
 
 const moodEmojis = {
@@ -31,7 +32,7 @@ const formatDate = (date) => {
 };
 
 const Dashboard = () => {
-  // Get the current date and format it
+  
   const currentDate = formatDate(new Date());
 
   const [currentMood, setCurrentMood] = useState("Neutral");
@@ -157,6 +158,9 @@ const Dashboard = () => {
             <EmotionPieChart pieData={pieData} />
           </Grid.Col>
         </Grid>
+
+        {/* Display Suggestions at the bottom of the dashboard */}
+        <Suggestions currentMood={currentMood} />
       </Container>
     </Center>
   );

@@ -2,12 +2,14 @@ import React from 'react';
 import { Card, Title as MantineTitle } from '@mantine/core';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
+const SCALE_FACTOR = 10;
+
 const Barchart = ({ data }) => {
-  // Map the emotion data if it's available, otherwise use a fallback empty array
+ 
   const barChartData = data
     ? Object.keys(data).map((emotion) => ({
         emotion: emotion.charAt(0).toUpperCase() + emotion.slice(1),
-        level: data[emotion],
+        level: data[emotion] * SCALE_FACTOR,  
       }))
     : [];
 
@@ -17,14 +19,14 @@ const Barchart = ({ data }) => {
         Your Emotional Levels
       </MantineTitle>
 
-      {/* Render the chart only if there is data */}
+      
       {barChartData.length > 0 ? (
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={barChartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="emotion" />
             <YAxis />
-            <Tooltip />
+            <Tooltip formatter={(value) => (value / SCALE_FACTOR).toFixed(2)} /> 
             <Legend />
             <Bar dataKey="level" fill="#8884d8" radius={[10, 10, 0, 0]} />
           </BarChart>
