@@ -56,6 +56,14 @@ async def delete_journal(journal_id: str):
     db.journals.delete_one({"_id": obj_id})
     return {"message": "Journal deleted"}
 
+@router.delete("/journals")
+async def delete_all():
+    """
+    Deletes everything.
+    """
+    db.journals.delete_many({})
+    return {"message": f"Deleted {result.deleted_count} journal(s) successfully"}
+
 @router.post("/journals/search")
 async def search_journals(journal_search: JournalSearch):
     """
