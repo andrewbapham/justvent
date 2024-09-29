@@ -55,6 +55,16 @@ function Home() {
               Feel heard at <i>Anytime</i>,<i> Anywhere</i>, <i>Anyplace</i>
               <br />
             </Title>
+            <Center>
+              <Button
+                size="lg"
+                w={"150px"}
+                style={{ backgroundColor: "#5D8A2C" }}
+                onClick={() => navigate("/signin")}
+              >
+                Sign In
+              </Button>
+            </Center>
           </Box>
 
           <Image
