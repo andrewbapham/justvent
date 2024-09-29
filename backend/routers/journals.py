@@ -41,7 +41,7 @@ async def create_journal(journal: Journal):
                        re.split('[.!?]', journal.content)))
     embedding_request = EmbeddingRequest(
         user_id=journal.user_id, journal_id=journal_id, text=text_chunks)
-    post_embedding(embedding_request)
+    await post_embedding(embedding_request)
 
     # document.update({"date": str(journal.date)})
     return {
