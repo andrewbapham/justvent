@@ -51,7 +51,8 @@ async def create_journal(journal: Journal):
     Date is auto-generated based on the current time.
     """
     document = journal.model_dump()
-    document.update({"date": str(date.today())})
+    if document["date"] == None:
+        document.update({"date": str(date.today())})
     document.update({"emotions": detector.getEmotions(document["content"])})
 
     journal_id = str(db.journals.insert_one(document).inserted_id)

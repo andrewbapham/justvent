@@ -22,12 +22,12 @@ class Emotion(BaseModel):
     emotion: str
     count: float | int
 
-
 class Journal(BaseModel):
     user_id: str
     content: str
     emotions: Dict[str, float | int] | None = None
     journal_id: str | None = None
+    date: str | None = None
 
     model_config = {
         "json_schema_extra": {
@@ -37,7 +37,8 @@ class Journal(BaseModel):
                 "emotions": {
                     "sadness": 1,
                     "joy": 4
-                }
+                },
+                "date": "2024-09-28"
             }
         }
     }
