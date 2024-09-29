@@ -65,7 +65,7 @@ const Journal = () => {
   };
 
   const handleAddJournal = async () => {
-    notifications.show({
+    const loadingNotification = notifications.show({
       title: "Creating entry....",
       color: "blue",
       loading: true,
@@ -94,6 +94,9 @@ const Journal = () => {
             message: "Please try again later",
             color: "red",
           });
+        })
+        .finally(() => {
+          notifications.hide(loadingNotification);
         });
       setJournals([newJournal, ...journals]);
       setContent("");
