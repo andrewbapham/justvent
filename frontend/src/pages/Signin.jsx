@@ -15,8 +15,17 @@ const Signin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Navigate to the dashboard page on form submission
-    navigate("/dashboard");
+
+    // Check if the email is either "user_001" or "user_002" and the password is "password"
+    if (
+      (email === "user_001" || email === "user_002") &&
+      password === "password"
+    ) {
+      // Navigate to the dashboard page and pass the user data
+      navigate("/dashboard", { state: { user: email } });
+    } else {
+      alert("Invalid credentials. Please try again.");
+    }
   };
 
   return (
@@ -53,7 +62,7 @@ const Signin = () => {
                 Email:
               </label>
               <input
-                type="email"
+                type="input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"

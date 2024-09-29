@@ -32,15 +32,14 @@ const formatDate = (date) => {
 };
 
 const Dashboard = () => {
-  
   const currentDate = formatDate(new Date());
 
   const [currentMood, setCurrentMood] = useState("Neutral");
   const [pieData, setPieData] = useState([]);
   const [emotionsData, setEmotionsData] = useState({});
-  const [userId] = useState("user_001");
+  const [userId] = useState("user_001"); // Set default user ID
   const [dateRange, setDateRange] = useState({
-    startDate: currentDate, // Set the default value to the current date
+    startDate: currentDate,
     rangeType: "day",
   });
 
@@ -134,6 +133,7 @@ const Dashboard = () => {
         </Box>
 
         <Grid className="charts-grid">
+          {/* Current Mood Card */}
           <Grid.Col span={6}>
             <Card className="current-mood-card">
               <Text className="card-title">
@@ -146,20 +146,23 @@ const Dashboard = () => {
             </Card>
           </Grid.Col>
 
+          {/* Radar Chart */}
           <Grid.Col span={6}>
             <Radarchart data={emotionsData} />
           </Grid.Col>
 
+          {/* Bar Chart */}
           <Grid.Col span={6}>
             <Barchart data={emotionsData} />
           </Grid.Col>
 
+          {/* Pie Chart */}
           <Grid.Col span={6}>
             <EmotionPieChart pieData={pieData} />
           </Grid.Col>
         </Grid>
 
-        {/* Display Suggestions at the bottom of the dashboard */}
+        {/* Display Suggestions based on current mood */}
         <Suggestions currentMood={currentMood} />
       </Container>
     </Center>
