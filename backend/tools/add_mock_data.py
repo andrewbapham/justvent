@@ -43,5 +43,4 @@ data = [{
 ]
 
 for record in data:
-   print(record)
    requests.post("http://justvent-lb-516258045.us-east-2.elb.amazonaws.com/api/v1/journals/", json=record)
