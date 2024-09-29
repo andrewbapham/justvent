@@ -49,7 +49,7 @@ const Searchbar = () => {
         </Menu.Target>
         <Menu.Dropdown>
           {searchResults.map((result) => (
-            <Menu.Item key={result.id}>{result.title}</Menu.Item>
+            <Menu.Item key={result.id}>{result.text}</Menu.Item>
           ))}
         </Menu.Dropdown>
       </Menu>
