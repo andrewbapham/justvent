@@ -28,7 +28,7 @@ async def create_journal(journal: Journal):
     """
     document = journal.model_dump()
     document.update({"date": str(date.today())})
-    document.update({"emotions": str(detector.getEmotions(document["content"]))})
+    document.update({"emotions": detector.getEmotions(document["content"])})
     #document.update({"date": str(journal.date)})
     journal_id = db.journals.insert_one(document).inserted_id
     return {
