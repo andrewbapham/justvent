@@ -19,7 +19,7 @@ function NavBar() {
       <Group gap={2}>
         <UnstyledButton
           onClick={() => navigate("/")}
-          className="custom-button"
+          className="logo-button"
           style={{
             outline: "none",
             backgroundColor: "transparent",
@@ -38,7 +38,6 @@ function NavBar() {
             outline: "none",
             backgroundColor: "transparent",
             border: "none",
-
           }}
         >
           Journal
@@ -58,10 +57,10 @@ function NavBar() {
         </UnstyledButton>
       </Group>
       <UnstyledButton
-          onClick={() => navigate("/signin")}
+        onClick={() => navigate("/signin")}
         className="custom-button"
         style={{
-          textAlign:"end",
+          textAlign: "end",
           padding: "8px",
           outline: "none",
           backgroundColor: "transparent",
