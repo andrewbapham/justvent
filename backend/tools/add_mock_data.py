@@ -3,7 +3,7 @@ import requests
 from emotion_detection import EmotionDetection
 
 detector = EmotionDetection()
-start_date = datetime(2024, 8, 1)
+start_date = datetime(2024, 8, 1).date()
 journal_entries = [
     "I started September with a clear mind. I had a productive day at work.",
     "Went for a long walk today. It felt great to be outside.",
@@ -43,4 +43,5 @@ data = [{
 ]
 
 for record in data:
+   print(record)
    requests.post("http://justvent-lb-516258045.us-east-2.elb.amazonaws.com/api/v1/journals/", json=record)
