@@ -7,7 +7,7 @@ import Dashboard from "./pages/components/Dashboard/Dashboard";
 import Journal from "./pages/Journal";
 import NavBar from "../src/components/NavBar";
 
-import Signin from "./pages/SignIn";
+import Signin from "./pages/Signin";
 
 import "./App.css";
 
