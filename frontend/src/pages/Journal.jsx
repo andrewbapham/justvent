@@ -184,7 +184,7 @@ const Journal = () => {
               <JournalEntry
                 id={journal._id}
                 content={journal.content}
-                emotions={ournal.emotions}
+                emotions={journal.emotions}
                 date={journal.date}
               />
             </Carousel.Slide>
