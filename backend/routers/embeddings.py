@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import APIRouter
 from dotenv import load_dotenv
 import os
 from models.embedding_types import EmbeddingObject, EmbeddingRequest
@@ -6,15 +6,8 @@ import psycopg
 from psycopg.rows import dict_row
 import requests
 
-conn = psycopg.connect(
-    "dbname=justvent user=justvent_user", row_factory=dict_row)
-
-
-load_dotenv()
-DB_URL = os.getenv("DB_URL")
-API_KEY = os.getenv("API_KEY")
-
-app = FastAPI()
+conn = psycopg.connect(os.environ['DB_URL'], row_factory=dict_row)
+router = APIRouter()
 
 
 def get_embeddings(text_inputs: list[str], user_id: str, journal_id: str, dimensions=1024, late_chunking=True) -> list[EmbeddingObject]:
@@ -48,7 +41,7 @@ def get_embeddings(text_inputs: list[str], user_id: str, journal_id: str, dimens
     return embeddings
 
 
-@app.post("embeddings/add_embeddings")
+@router.post("/embeddings/add_embeddings")
 async def post_embedding(body: EmbeddingRequest) -> dict:
     embeddings_list = get_embeddings(
         body.text, body.user_id, body.journal_id)
@@ -63,7 +56,7 @@ async def post_embedding(body: EmbeddingRequest) -> dict:
     return {"message": f"added {len(embeddings_list)} embeddings"}
 
 
-@app.get("embeddings/get_related")
+@router.get("/embeddings/get_related")
 async def get_related(user_id: str, text: str, limit: int = 10):
     cursor = conn.cursor()
     embedding = get_embeddings([text], None, None)[0]
