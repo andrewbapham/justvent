@@ -48,7 +48,7 @@ def get_embeddings(text_inputs: list[str], user_id: str, journal_id: str, dimens
     return embeddings
 
 
-@app.post("/add_embeddings")
+@app.post("embeddings/add_embeddings")
 async def post_embedding(body: EmbeddingRequest) -> dict:
     embeddings_list = get_embeddings(
         body.text, body.user_id, body.journal_id)
@@ -63,7 +63,7 @@ async def post_embedding(body: EmbeddingRequest) -> dict:
     return {"message": f"added {len(embeddings_list)} embeddings"}
 
 
-@app.get("/get_related")
+@app.get("embeddings/get_related")
 async def get_related(user_id: str, text: str, limit: int = 10):
     cursor = conn.cursor()
     embedding = get_embeddings([text], None, None)[0]

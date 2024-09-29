@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import routers.journals as journals
 import routers.users as users
+import routers.embeddings as embeddings
 
 origins = [
     "http://localhost:5173",
@@ -26,6 +27,7 @@ app.add_middleware(
 
 app.include_router(journals.router, prefix="/api/v1", tags=["journals"])
 app.include_router(users.router, prefix="/api/v1", tags=["users"])
+app.include_router(embeddings.router, prefix="/api/v1", tags=["embeddings"])
 
 
 @app.get("/healthcheck")
