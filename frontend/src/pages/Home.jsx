@@ -91,7 +91,7 @@ function Home() {
             className={"archivo-black-regular"}
             style={{ marginBottom: "1em", textAlign: "center" }}
           >
-            Discover the power of Daily Jounaling
+            Discover the power of Daily Journaling
           </Title>
 
           {/* Line Divider */}
