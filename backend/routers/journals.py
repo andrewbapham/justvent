@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from bson import ObjectId
 from database import db
 from datetime import date
 from models.journal_types import Journal, JournalSearch
@@ -49,10 +50,10 @@ async def delete_journal(journal_id: str):
     try:
         obj_id = ObjectId(journal_id)
     except Exception:
-        raise HTTPException(status_code=400, detail="Invalid journal ID format")
+        raise BaseException()
     if not db.journals.find_one({"_id": obj_id}):
         return {"message": db.journals}
-    db.journals.delete_one({"_id": journal_id})
+    db.journals.delete_one({"_id": obj_id})
     return {"message": "Journal deleted"}
 
 @router.post("/journals/search")

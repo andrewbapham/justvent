@@ -35,20 +35,16 @@ async def get_user_emotions(
     # Convert to string so mongo can query properly
     start_date = str(start_date.astimezone(timezone.utc))
     end_date = str(end_date.astimezone(timezone.utc))
-    print(start_date, end_date)
 
     # Get all journals within the date range
-    journals = list(
-        db.journals.find(
+    journals = db.journals.find(
             {"user_id": user_id, "date": {"$gte": start_date, "$lte": end_date}}
-        )
     )
-    print(len(journals))
     if not journals:
         return {"message": "No journals found for user in date range"}
 
     # Calculate average emotions
-    emotions = collections.defaultdict(list)
+    emotions = collections.defaultdict(int)
     for journal in journals:
         for emotion, value in journal["emotions"].items():
             emotions[emotion] += value
