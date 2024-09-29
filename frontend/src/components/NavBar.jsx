@@ -1,7 +1,7 @@
 import { Group, UnstyledButton } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import homeIcon from "../assets/new_make_logo_updated.png";
-import "./Navbar.css";
+import "./navbar.css";
 
 function NavBar() {
   const navigate = useNavigate();
