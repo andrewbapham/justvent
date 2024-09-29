@@ -14,6 +14,7 @@ import {
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { useDisclosure } from "@mantine/hooks";
+import { FaSearch } from "react-icons/fa";
 
 import { JournalEntry } from "../components/JournalEntry";
 
@@ -49,7 +50,6 @@ const Journal = () => {
       const result = await axiosClient.get(`journals/user/user_001`);
       const recentResults = result.data.journals.reverse();
       setJournals(recentResults);
-      console.log(recentResults);
     };
 
     fetchJournals();
@@ -133,17 +133,20 @@ const Journal = () => {
         </Button>
       </Modal>
 
-      <Button
-        onClick={open}
-        style={{ position: "absolute", top: 100, right: 20 }}
-      >
-        Write a new Entry
-      </Button>
-
-      {/* Past Journal Entries Section */}
-      <Title order={1} align="center" mt="xl" mb="lg">
-        Past Journal Entries
-      </Title>
+      <Flex align="center" justify="space-between" w={"80vw"}>
+        {/* Past Journal Entries Section */}
+        <Title order={1} align="center" mt="xl" mb="lg">
+          Past Journal Entries
+        </Title>
+        <Flex gap={10}>
+          <TextInput
+            leftSectionPointerEvents="none"
+            leftSection={<FaSearch size={20} />}
+            placeholder="Search"
+          />
+          <Button onClick={open}>Write a new Entry</Button>
+        </Flex>
+      </Flex>
 
       {journals.length > 0 ? (
         <Carousel slideGap="md" controlsOffset="xs" w={"80vw"}>

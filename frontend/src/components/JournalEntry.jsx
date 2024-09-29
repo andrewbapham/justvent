@@ -29,13 +29,7 @@ export function JournalEntry({ id, content, emotions, date }) {
     <Card key={id} shadow="sm" padding="lg" style={{ overflowY: "scroll" }}>
       <Flex justify={"flex-end"}>
         <Flex align={"center"} gap={10}>
-          <Text>
-            Moods:
-            {emotions &&
-              Object.keys(moodEmojis).map((key) => {
-                console.log(typeof emotions);
-              })}
-          </Text>
+          <Text>Moods:</Text>
           <Text>{date}</Text>
           <ActionIcon
             color="red"
