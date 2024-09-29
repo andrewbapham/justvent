@@ -150,21 +150,17 @@ function Home() {
             p="1em"
           >
             {/* Tagline */}
-
-            <button
-              style={{
-                width: "100%",
-                fontSize: "20px",
-                backgroundColor: "#5D8A2C",
-                opacity: btnOpacity,
-                height: "5em",
-                transition: "opacity 2s",
-              }}
-              id={"btn-signin"}
-              onClick={() => navigate("/journal")}
-            >
-              Start writing now
-            </button>
+            <Button
+                fontSize="20px"
+                opacity={btnOpacity}
+                h={"5em"}
+                w={"90%"}
+                id="btn-signin"
+                style={{ backgroundColor: "#5D8A2C", transition: "opacity 2s"}}
+                onClick={() => navigate("/journal")}
+              >
+                Start writing now
+              </Button>
             <br />
           </Box>
         </Flex>
@@ -187,7 +183,8 @@ function Home() {
           }
 
           #btn-signin:hover {
-            border:3px solid #000000;
+            min-width:100%;
+            border:3px solid #000;
             cursor: pointer;
           }
         `}
