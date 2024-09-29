@@ -23,7 +23,8 @@ async def get_user_emotions(
 
     The date range is inclusive of the start date and exclusive of the end date.
     """
-    categories = ["joy", "anger", "fear", "neutral", "disgust", "sadness", "surprise"]
+    categories = ["joy", "anger", "fear",
+                  "neutral", "disgust", "sadness", "surprise"]
     # Get date range
     start_date = datetime.fromisoformat(date_query.start_date).date()
 
@@ -37,7 +38,7 @@ async def get_user_emotions(
 
     # Get all journals within the date range
     journals = db.journals.find(
-            {"user_id": user_id, "date": {"$gte": start_date, "$lte": end_date}}
+        {"user_id": user_id, "date": {"$gte": start_date, "$lte": end_date}}
     )
     if not journals:
         return {"message": "No journals found for user in date range"}
@@ -51,6 +52,6 @@ async def get_user_emotions(
             emotions[emotion] += value
 
     for emotion, value in emotions.items():
-        emotions[emotion] = value / count
+        emotions[emotion] = value / max(count, 1)
 
     return emotions
