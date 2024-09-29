@@ -14,6 +14,16 @@ export function JournalEntry({ id, content, emotions, date }) {
     surprise: "😮",
   };
 
+  const moods = [
+    "anger",
+    "disgust",
+    "fear",
+    "joy",
+    "neutral",
+    "sadness",
+    "surprise",
+  ];
+
   const axiosClient = axios.create({
     baseURL: "http://justvent-lb-516258045.us-east-2.elb.amazonaws.com/api/v1/",
     timeout: 20000,
@@ -43,7 +53,14 @@ export function JournalEntry({ id, content, emotions, date }) {
     <Card key={id} shadow="sm" padding="lg" style={{ overflowY: "scroll" }}>
       <Flex justify={"flex-end"}>
         <Flex align={"center"} gap={10}>
-          <Text>Moods:</Text>
+          <Text>
+            Moods:
+            {moods.map((mood) => {
+              return emotions && emotions[mood] >= 0.25
+                ? " " + moodEmojis[mood]
+                : "";
+            })}
+          </Text>
           <Text>{date}</Text>
           <ActionIcon
             color="red"

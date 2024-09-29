@@ -65,7 +65,7 @@ const Journal = () => {
   };
 
   const handleAddJournal = async () => {
-    notifications.show({
+    const loadingNotification = notifications.show({
       title: "Creating entry....",
       color: "blue",
       loading: true,
@@ -94,6 +94,9 @@ const Journal = () => {
             message: "Please try again later",
             color: "red",
           });
+        })
+        .finally(() => {
+          notifications.hide(loadingNotification);
         });
       setJournals([newJournal, ...journals]);
       setContent("");
@@ -175,7 +178,10 @@ const Journal = () => {
               <JournalEntry
                 id={journal._id}
                 content={journal.content}
-                emotions={journal.emotions !== "None" && journal.emotions}
+                emotions={
+                  journal.emotions !== "None" &&
+                  JSON.parse(journal.emotions.replace(/'/g, '"'))
+                }
                 date={journal.date}
               />
             </Carousel.Slide>
