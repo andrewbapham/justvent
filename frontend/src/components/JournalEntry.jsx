@@ -25,7 +25,8 @@ export function JournalEntry({ id, content, emotions, date }) {
   ];
 
   const axiosClient = axios.create({
-    baseURL: "http://justvent-lb-516258045.us-east-2.elb.amazonaws.com/api/v1/",
+    baseURL:
+      "http://justvent-app-lb-2099772870.us-east-2.elb.amazonaws.com/api/v1/",
     timeout: 20000,
     headers: { "Access-Control-Allow-Origin": "*" },
   });

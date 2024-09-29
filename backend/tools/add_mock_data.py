@@ -39,8 +39,9 @@ data = [{
         "content": journal_entries[i],
         "emotions": detector.getEmotions(journal_entries[i]),
         "date": str(start_date + timedelta(days=i))
-    } for i in range(len(journal_entries))
-]
+        } for i in range(len(journal_entries))
+        ]
 
 for record in data:
-   requests.post("http://justvent-lb-516258045.us-east-2.elb.amazonaws.com/api/v1/journals/", json=record)
+    requests.post(
+        "http://justvent-app-lb-2099772870.us-east-2.elb.amazonaws.com/api/v1/journals/", json=record)
