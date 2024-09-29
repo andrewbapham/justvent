@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, Center, Box, Card, Text, Select } from '@mantine/core';
-import Barchart from './Barchart';
+import axios from 'axios';
 import Radarchart from './Radarchat';
+import Barchart from './Barchart';
 import EmotionPieChart from './EmotionPieChart';
-
 import "../../design/Dashboard.css";
-
-// Sample data to simulate API response
-const sampleEmotionsData = {
-  "Anger": 0.72,
-  "Disgust": 0.35,
-  "Fear": 0.55,
-  "Joy": 0.25,
-  "Neutral": 0.60,
-  "Sadness": 0.42,
-  "Surprise": 0.70
-};
 
 // Emoji mapping for current mood
 const moodEmojis = {
@@ -28,14 +17,23 @@ const moodEmojis = {
   Surprise: '😮',
 };
 
+const formatDate = (date) => {
+  if (!date) return ''; 
+  const d = new Date(date);
+  return d.toISOString().split('T')[0];  
+};
+
+
+
+
 const Dashboard = () => {
   const [currentMood, setCurrentMood] = useState('Neutral');
   const [pieData, setPieData] = useState([]);
   const [emotionsData, setEmotionsData] = useState({});
+  const [userId] = useState('user_001');  
   const [dateRange, setDateRange] = useState({
     startDate: '',
-    endDate: '',
-    rangeType: 'day',  // Default to 'day'
+    rangeType: 'day', 
   });
 
   // Handle date input changes
@@ -47,40 +45,57 @@ const Dashboard = () => {
     }));
   };
 
-  // Handle date range type change
+  // Handle range type selection change
   const handleRangeTypeChange = (value) => {
     setDateRange((prev) => ({
       ...prev,
       rangeType: value,
-      startDate: '',  // Reset start date when range type changes
-      endDate: '',    // Reset end date when range type changes
     }));
   };
 
-  // Fetch sample emotion data (instead of calling API)
+  // Fetch emotion data from the API
   useEffect(() => {
-    const fetchEmotionData = () => {
-      const emotionsData = sampleEmotionsData;
+    const fetchEmotionData = async () => {
+      if (!dateRange.startDate) {
+        console.error('Start date is required');
+        return;
+      }
 
-      // Prepare pie data for the PieChart
-      const pieChartData = Object.keys(emotionsData).map((emotion) => ({
-        name: emotion.charAt(0).toUpperCase() + emotion.slice(1),
-        value: emotionsData[emotion],
-      }));
+      const formattedStartDate = formatDate(dateRange.startDate);
 
-      setPieData(pieChartData);
-      setEmotionsData(emotionsData);  // Set data for Radar and Bar charts
+      try {
+        // API call to fetch data
+        const response = await axios.get(`http://your-api-endpoint.com/api/v1/users/emotions/${userId}`, {
+          params: {
+            range_type: dateRange.rangeType,
+            start_date: formattedStartDate,
+          },
+        });
 
-      // Determine the highest emotion for "current mood"
-      const highestEmotion = pieChartData.reduce((prev, current) => {
-        return prev.value > current.value ? prev : current;
-      }, { name: 'Neutral', value: 0 });
+        const emotionsData = response.data;  // API response data
 
-      setCurrentMood(highestEmotion.name || 'Neutral');
+        // Prepare data for PieChart
+        const pieChartData = Object.keys(emotionsData).map((emotion) => ({
+          name: emotion.charAt(0).toUpperCase() + emotion.slice(1),
+          value: emotionsData[emotion],
+        }));
+
+        setPieData(pieChartData);
+        setEmotionsData(emotionsData);
+
+        // Determine the highest emotion for "Current Mood"
+        const highestEmotion = pieChartData.reduce((prev, current) => {
+          return prev.value > current.value ? prev : current;
+        }, { name: 'Neutral', value: 0 });
+
+        setCurrentMood(highestEmotion.name || 'Neutral');
+      } catch (error) {
+        console.error('Error fetching emotion data:', error);
+      }
     };
 
     fetchEmotionData();
-  }, [dateRange]);
+  }, [dateRange, userId]);
 
   return (
     <Center className="fullscreen-center">
@@ -89,35 +104,16 @@ const Dashboard = () => {
 
         {/* Date range selection controls */}
         <Box style={{ marginBottom: "2em", display: "flex", gap: "10px" }}>
-          {dateRange.rangeType === 'day' ? (
-            <input
-              type="date"
-              name="startDate"
-              value={dateRange.startDate}
-              onChange={handleDateChange}
-              style={{ padding: "8px", borderRadius: "5px" }}
-              placeholder="Select Date"
-            />
-          ) : (
-            <>
-              <input
-                type="date"
-                name="startDate"
-                value={dateRange.startDate}
-                onChange={handleDateChange}
-                style={{ padding: "8px", borderRadius: "5px" }}
-                placeholder="Start Date"
-              />
-              <input
-                type="date"
-                name="endDate"
-                value={dateRange.endDate}
-                onChange={handleDateChange}
-                style={{ padding: "8px", borderRadius: "5px" }}
-                placeholder="End Date"
-              />
-            </>
-          )}
+          {/* Date input */}
+          <input
+            type="date"
+            name="startDate"
+            value={dateRange.startDate}
+            onChange={handleDateChange}
+            style={{ padding: "8px", borderRadius: "5px" }}
+            placeholder="Select Date"
+          />
+          {/* Range type select */}
           <Select
             value={dateRange.rangeType}
             onChange={handleRangeTypeChange}
@@ -148,17 +144,17 @@ const Dashboard = () => {
 
           {/* Radar Chart */}
           <Grid.Col span={6}>
-            <Radarchart data={emotionsData} />  {/* Pass emotionsData as prop */}
+            <Radarchart data={emotionsData} />  
           </Grid.Col>
 
           {/* Bar Chart */}
           <Grid.Col span={6}>
-            <Barchart data={emotionsData} />  {/* Pass emotionsData as prop */}
+            <Barchart data={emotionsData} />  
           </Grid.Col>
 
-          {/* Emotion PieChart */}
+          {/* Pie Chart */}
           <Grid.Col span={6}>
-            <EmotionPieChart pieData={pieData} />  {/* Pass pieData as prop */}
+            <EmotionPieChart pieData={pieData} />  
           </Grid.Col>
         </Grid>
       </Container>
