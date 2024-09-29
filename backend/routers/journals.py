@@ -2,12 +2,16 @@ from fastapi import APIRouter
 from bson import ObjectId
 from database import db
 from datetime import date
+from models.embedding_types import EmbeddingRequest
 from models.journal_types import Journal, JournalSearch
+from routers.embeddings import post_embedding
 from util.mongo_utils import serialize_ids
 from tools.emotion_detection import EmotionDetection
+import re
 
 router = APIRouter()
 detector = EmotionDetection()
+
 
 @router.get("/journals/user/{user_id}")
 async def get_journals(user_id: str):
@@ -20,6 +24,7 @@ async def get_journals(user_id: str):
     journals = [serialize_ids(journal) for journal in journals]
     return {"journals": journals}
 
+
 @router.post("/journals")
 async def create_journal(journal: Journal):
     """
@@ -29,17 +34,27 @@ async def create_journal(journal: Journal):
     document = journal.model_dump()
     document.update({"date": str(date.today())})
     document.update({"emotions": detector.getEmotions(document["content"])})
-    #document.update({"date": str(journal.date)})
-    journal_id = db.journals.insert_one(document).inserted_id
+
+    journal_id = str(db.journals.insert_one(document).inserted_id)
+
+    text_chunks = list(filter(lambda x: x.strip() != "",
+                       re.split('[.!?]', journal.content)))
+    embedding_request = EmbeddingRequest(
+        user_id=journal.user_id, journal_id=journal_id, text=text_chunks)
+    post_embedding(embedding_request)
+
+    # document.update({"date": str(journal.date)})
     return {
-        "message": "Journal created", 
+        "message": "Journal created",
         "journal_id": str(journal_id)
     }
+
 
 @router.put("/journals/{journal_id}")
 async def update_journal(journal_id: str, journal: dict):
     db.journals.update_one({"_id": journal_id}, {"$set": journal})
     return {"message": "Journal updated"}
+
 
 @router.delete("/journals/{journal_id}")
 async def delete_journal(journal_id: str):
@@ -56,6 +71,7 @@ async def delete_journal(journal_id: str):
     db.journals.delete_one({"_id": obj_id})
     return {"message": "Journal deleted"}
 
+
 @router.delete("/journals")
 async def delete_all():
     """
@@ -63,6 +79,7 @@ async def delete_all():
     """
     db.journals.delete_many({})
     return {"message": f"Deleted {result.deleted_count} journal(s) successfully"}
+
 
 @router.post("/journals/search")
 async def search_journals(journal_search: JournalSearch):
@@ -78,7 +95,8 @@ async def search_journals(journal_search: JournalSearch):
     if journal_search.date_exact:
         query.update({"date": str(journal_search.date_exact)})
     elif journal_search.date_start and journal_search.date_end:
-        query.update({"date": {"$gte": str(journal_search.date_start), "$lte": str(journal_search.date_end)}})
+        query.update({"date": {"$gte": str(journal_search.date_start),
+                     "$lte": str(journal_search.date_end)}})
     elif journal_search.date_start:
         query.update({"date": {"$gte": str(journal_search.date_start)}})
     elif journal_search.date_end:
@@ -86,14 +104,16 @@ async def search_journals(journal_search: JournalSearch):
 
     if journal_search.content:
         query.update({"$text": {"$search": journal_search.content}})
-    
+
     if journal_search.emotions:
         for emotion_query in journal_search.emotions:
             if emotion_query.query_type == "gte":
-                query.update({f"emotions.{emotion_query.emotion}" : {"$gte": emotion_query.count}})
+                query.update({f"emotions.{emotion_query.emotion}": {
+                             "$gte": emotion_query.count}})
             elif emotion_query.query_type == "lte":
-                query.update({f"emotions.{emotion_query.emotion}" : {"$lte": emotion_query.count}})
-    
+                query.update({f"emotions.{emotion_query.emotion}": {
+                             "$lte": emotion_query.count}})
+
     journals = list(db.journals.find(query))
     journals = [serialize_ids(journal) for journal in journals]
     return {"journals": journals}

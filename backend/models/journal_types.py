@@ -2,10 +2,12 @@ from pydantic import BaseModel
 from typing import List, Literal, Dict
 from datetime import datetime
 
+
 class EmotionQuery(BaseModel):
     emotion: str
     count: int
-    query_type: Literal["gte","lte"]
+    query_type: Literal["gte", "lte"]
+
 
 class JournalSearch(BaseModel):
     user_id: str
@@ -18,12 +20,14 @@ class JournalSearch(BaseModel):
 
 class Emotion(BaseModel):
     emotion: str
-    count: int
+    count: float | int
+
 
 class Journal(BaseModel):
     user_id: str
     content: str
-    emotions: Dict[str, int] | None = None
+    emotions: Dict[str, float | int] | None = None
+    journal_id: str | None = None
 
     model_config = {
         "json_schema_extra": {
