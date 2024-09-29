@@ -13,7 +13,7 @@
 .custom-button:hover {
   background-color: #fefae0;
   color: #d4a373; /* Darker background on hover */
-  transform: translateY(-5px); /* Move the button up by 5px */
+  transform: translateY(-2px); /* Move the button up by 2px */
 }
 
 .custom-button:active {

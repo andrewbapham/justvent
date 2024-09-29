@@ -125,7 +125,7 @@ const Journal = () => {
         <Flex align={"center"} pb={"md"} gap={8}>
           <Button
             onClick={handleGetPrompt}
-            style={{ backgroundColor: "#CCD5AE" }}
+            style={{ backgroundColor: "#5D8A2C" }}
             w={"200px"}
           >
             Give me a Prompt
@@ -148,7 +148,7 @@ const Journal = () => {
 
         <Button
           onClick={handleAddJournal}
-          style={{ backgroundColor: "#CCD5AE" }}
+          style={{ backgroundColor: "#5D8A2C" }}
           mt={"50px"}
           fullWidth
         >
@@ -167,7 +167,9 @@ const Journal = () => {
             leftSection={<FaSearch size={20} />}
             placeholder="Search"
           />
-          <Button onClick={open}>Write a new Entry</Button>
+          <Button onClick={open} style={{ backgroundColor: "#5D8A2C" }}>
+            Write a new Entry
+          </Button>
         </Flex>
       </Flex>
 
