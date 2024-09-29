@@ -6,7 +6,6 @@ import Barchart from './Barchart';
 import EmotionPieChart from './EmotionPieChart';
 import "../../design/Dashboard.css";
 
-// Emoji mapping for current mood
 const moodEmojis = {
   Anger: '😡',
   Disgust: '🤢',
@@ -36,7 +35,7 @@ const Dashboard = () => {
     rangeType: 'day', 
   });
 
-  // Handle date input changes
+  
   const handleDateChange = (e) => {
     const { name, value } = e.target;
     setDateRange((prev) => ({
@@ -45,7 +44,6 @@ const Dashboard = () => {
     }));
   };
 
-  // Handle range type selection change
   const handleRangeTypeChange = (value) => {
     setDateRange((prev) => ({
       ...prev,
@@ -53,7 +51,6 @@ const Dashboard = () => {
     }));
   };
 
-  // Fetch emotion data from the API
   useEffect(() => {
     const fetchEmotionData = async () => {
       if (!dateRange.startDate) {
@@ -64,17 +61,16 @@ const Dashboard = () => {
       const formattedStartDate = formatDate(dateRange.startDate);
 
       try {
-        // API call to fetch data
-        const response = await axios.get(`http://your-api-endpoint.com/api/v1/users/emotions/${userId}`, {
+      
+        const response = await axios.get(`http://justvent-lb-516258045.us-east-2.elb.amazonaws.com//api/v1/users/emotions/${userId}`, {
           params: {
             range_type: dateRange.rangeType,
             start_date: formattedStartDate,
           },
         });
 
-        const emotionsData = response.data;  // API response data
-
-        // Prepare data for PieChart
+        const emotionsData = response.data;  
+       
         const pieChartData = Object.keys(emotionsData).map((emotion) => ({
           name: emotion.charAt(0).toUpperCase() + emotion.slice(1),
           value: emotionsData[emotion],
