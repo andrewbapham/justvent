@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 import routers.journals as journals
 import routers.users as users
 import routers.embeddings as embeddings
+from dotenv import load_dotenv
+
+load_dotenv()
 
 origins = [
     "http://localhost:5173",
