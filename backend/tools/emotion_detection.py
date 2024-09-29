@@ -7,14 +7,14 @@ class EmotionDetection:
 
     def __init__(self):
         # download pre-trained emotion classification model
-        self.model = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base", top_k=None) # Pytorch 
+        self.model = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base") # Pytorch 
         self.df = pd.DataFrame() # Pandas Dataframe
 
     def processText(self, text: str) -> None:
         # Returns None.
         # This processes the text by removing splitting the text by sentences.
         text = re.split('[.!?]', text)
-        dataset = {"text": text[:-1]}
+        dataset = {"text": text}
         self.df = pd.DataFrame(dataset)
 
     def detectEmotions(self, text: str) -> None:
