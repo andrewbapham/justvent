@@ -1,18 +1,25 @@
+/* Default styles for most desktop screens */
+#{
+  background-color: #FEFAE0;
+}
 
 .fullscreen-center {
   width: 100vw;
   height: 100vh;
-  min-height: 100vh; 
   background-color: #FEFAE0;
+  padding-top: 5em;
+  padding-bottom: 5em;
 }
 
-
+/* Ensure content stays centered with flexbox */
 .fullscreen-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 1200px;  /* Set a max width so it doesn't stretch too much on large screens */
+  width: 90%; /* Responsive width */
 }
 
 .bounce {
@@ -33,6 +40,7 @@
   text-align: center;
   margin-bottom: 10px; 
 }
+
 .current-mood-card {
   display: flex;
   flex-direction: column;
@@ -47,19 +55,85 @@
   font-size: 1.5rem;
   margin-top: 10px;
 }
-.emojiword{
+
+.emojiword {
   font-size: 2em;
   align-items: center;
   justify-content: center;
   margin-left: 35%;
 }
 
-
+/* Bounce animation */
 @keyframes bounce {
   0%, 100% {
     transform: translateY(0);
   }
   50% {
     transform: translateY(-10px);
+  }
+}
+
+/* Media Queries for Larger and Smaller Screens */
+
+/* For very large screens (e.g., 1600px and above) */
+@media (min-width: 1600px) {
+  .fullscreen-container {
+    max-width: 1400px;  /* Increase max width */
+    padding-top: 6em;
+    padding-bottom: 6em;
+  }
+
+  .card-title {
+    font-size: 40px;
+  }
+
+  .emoji-large {
+    font-size: 8rem;  /* Increase emoji size on large screens */
+  }
+
+  .emojiword {
+    font-size: 2.5em;
+    margin-left: 30%;
+  }
+}
+
+/* For smaller desktop screens (less than 1200px) */
+@media (max-width: 1200px) {
+  .fullscreen-center {
+    padding-top: 3em;
+    padding-bottom: 3em;
+  }
+
+  .fullscreen-container {
+    width: 95%;
+  }
+
+  .card-title {
+    font-size: 30px;
+  }
+
+  .emoji-large {
+    font-size: 5rem;
+  }
+
+  .emojiword {
+    font-size: 1.8em;
+    margin-left: 25%;
+  }
+}
+
+/* For very small desktop screens or larger tablets (less than 800px) */
+@media (max-width: 800px) {
+  .card-title {
+    font-size: 25px;
+  }
+
+  .emoji-large {
+    font-size: 4rem;
+  }
+
+  .emojiword {
+    font-size: 1.5em;
+    margin-left: 20%;
   }
 }
