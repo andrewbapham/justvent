@@ -6,8 +6,7 @@ import psycopg
 from psycopg.rows import dict_row
 import requests
 
-conn = psycopg.connect(
-    "dbname=justvent user=justvent_user", row_factory=dict_row)
+conn = psycopg.connect(os.environ['DB_URL'], row_factory=dict_row)
 
 
 load_dotenv()
