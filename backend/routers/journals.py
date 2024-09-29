@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from database import db
-from datetime import datetime, timezone
+from datetime import date
 from models.journal_types import Journal, JournalSearch
 from util.mongo_utils import serialize_ids
 from tools.emotion_detection import EmotionDetection
@@ -26,8 +26,8 @@ async def create_journal(journal: Journal):
     Date is auto-generated based on the current time.
     """
     document = journal.model_dump()
-    document.update({"date": str(datetime.now(timezone.utc))})
-    document.update({"emotions": {"joy": 2}})
+    document.update({"date": str(date.today())})
+    document.update({"emotions": str(detector.getEmotions(document["content"]))})
     #document.update({"date": str(journal.date)})
     journal_id = db.journals.insert_one(document).inserted_id
     return {
@@ -45,8 +45,13 @@ async def delete_journal(journal_id: str):
     """
     Deletes a journal entry given an input journal_id.
     """
-    if not db.journals.find_one({"_id": journal_id}):
-        return {"message": "Journal not found"}
+    # Convert journal_id to ObjectId
+    try:
+        obj_id = ObjectId(journal_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid journal ID format")
+    if not db.journals.find_one({"_id": obj_id}):
+        return {"message": db.journals}
     db.journals.delete_one({"_id": journal_id})
     return {"message": "Journal deleted"}
 
