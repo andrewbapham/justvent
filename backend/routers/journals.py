@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from bson import ObjectId
 from database import db
 from datetime import date
@@ -24,6 +24,25 @@ async def get_journals(user_id: str):
     journals = [serialize_ids(journal) for journal in journals]
     return {"journals": journals}
 
+@router.get("/journals/{journal_id}")
+async def get_journal(journal_id: str):
+    """
+    Retrieves a journal based on the input journal_id.
+    """
+        # Convert journal_id to ObjectId
+    try:
+        obj_id = ObjectId(journal_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid journal ID format")
+    
+    journal = db.journals.find_one({"_id": obj_id})
+    # If the journal is not found, raise an exception
+    if not journal:
+        raise HTTPException(status_code=404, detail="Journal not found")
+
+    # Convert the _id (ObjectId) to a string for JSON serialization
+    journal['_id'] = str(journal['_id'])
+    return journal
 
 @router.post("/journals")
 async def create_journal(journal: Journal):
@@ -49,13 +68,6 @@ async def create_journal(journal: Journal):
         "journal_id": str(journal_id)
     }
 
-
-@router.put("/journals/{journal_id}")
-async def update_journal(journal_id: str, journal: dict):
-    db.journals.update_one({"_id": journal_id}, {"$set": journal})
-    return {"message": "Journal updated"}
-
-
 @router.delete("/journals/{journal_id}")
 async def delete_journal(journal_id: str):
     """
@@ -65,7 +77,7 @@ async def delete_journal(journal_id: str):
     try:
         obj_id = ObjectId(journal_id)
     except Exception:
-        raise BaseException()
+        raise HTTPException(status_code=400, detail="Invalid journal ID format")
     if not db.journals.find_one({"_id": obj_id}):
         return {"message": db.journals}
     db.journals.delete_one({"_id": obj_id})
