@@ -1,3 +1,18 @@
+/* Style the logo button */
+.logo-button {
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 16px; /* Font size */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover and transform */
+}
+
+/* Hover effect */
+.logo-button:hover {
+  transform: rotate(90deg); /* Move the button up by 5px */
+  transition-duration: 500ms;
+}
+
 /* Style the unstyled button */
 .custom-button {
   background-color: #007bff; /* Background color */
@@ -14,6 +29,7 @@
   background-color: #fefae0;
   color: #d4a373; /* Darker background on hover */
   transform: translateY(-2px); /* Move the button up by 2px */
+  
 }
 
 .custom-button:active {

@@ -14,12 +14,18 @@ function Home() {
     opacity: 0,
     width: "200px",
     position: "absolute",
-    left: "-50px", // Initially off-screen to the left
-    transition: "opacity 2s, left 2s", // Transition for smooth animation
+    left: "-50px",
+    transition: "opacity 2s, left 2s",
   });
 
   return (
-    <Center bg="#fefae0" w={"100vw"} h={"300vh"} className="hide-scroll-bar">
+    <Center
+      bg="#fefae0"
+      w={"100vw"}
+      h={"300vh"}
+      className="hide-scroll-bar"
+      style={{ overflowX: "hidden" }} // Ensures no horizontal overflow
+    >
       <section
         style={{
           position: "absolute",
@@ -29,7 +35,7 @@ function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "flex-start",
-          overflow: "hidden",
+          overflow: "hidden", // Prevent any overflow
         }}
       >
         <Flex
@@ -41,7 +47,6 @@ function Home() {
           pt="lg"
           pb="lg"
         >
-          {/* Text and Button in a column */}
           <Box mr="xl">
             <Title order={1} size={100} style={{ lineHeight: "1.2" }}>
               JustVent
@@ -70,12 +75,11 @@ function Home() {
           <Image
             src={new_make_logo}
             alt="Logo"
-            width={160} // Adjust the width as needed
+            width={160}
             style={spinAnimation} // Apply spin animation
           />
         </Flex>
 
-        {/* Flex Container for Title and Paragraph */}
         <Flex
           direction="column"
           align="center"
@@ -94,7 +98,6 @@ function Home() {
             Discover the power of Daily Journaling
           </Title>
 
-          {/* Line Divider */}
           <div
             style={{
               width: "60%",
@@ -132,14 +135,7 @@ function Home() {
             setbtnOpacity(1);
           }}
         >
-          {/* Text and Button in a column */}
-
-          {/* Image with fade animation in intro */}
-          <Image
-            src={notebook} // Use your imported image
-            alt="Notebook"
-            style={animation}
-          />
+          <Image src={notebook} alt="Notebook" style={animation} />
 
           <Box
             display="flex"
@@ -148,7 +144,7 @@ function Home() {
             alignItems="center"
             m="xl"
             p="1em"
-          >
+          > 
             {/* Tagline */}
             <Button
                 fontSize="20px"
@@ -162,7 +158,7 @@ function Home() {
                 Start writing now
               </Button>
             <br />
-          </Box>
+          </ Box>
         </Flex>
       </section>
 
@@ -186,6 +182,10 @@ function Home() {
             min-width:100%;
             border:3px solid #000;
             cursor: pointer;
+          }
+
+          body {
+            overflow-x: hidden; /* Prevents horizontal scrolling */
           }
         `}
       </style>

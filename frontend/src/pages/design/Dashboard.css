@@ -1,59 +1,70 @@
-
+/* Center the main container and ensure it covers the full viewport height */
 .fullscreen-center {
   width: 100vw;
-  height: 100vh;
-  min-height: 100vh; 
+  min-height: 100vh; /* Ensures it covers the full viewport height */
   background-color: #FEFAE0;
-}
-
-
-.fullscreen-container {
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 2em;
+  margin-top: 5rem;
+  overflow: hidden; /* Prevents scrolling when content fits */
 }
 
-.bounce {
-  animation: bounce 2s infinite;
+/* Ensure the container width is consistent and adapts to screen size */
+.fullscreen-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px; /* Controls max width on large screens */
+  height: auto;
+  margin-top: -5em;
 }
 
+/* Control the date input and range selector layout */
+.date-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2em;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 1rem;
+}
+
+.date-input,
+.range-select {
+  padding: 8px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 250px;
+  font-size: 1rem;
+}
+
+.charts-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center; /* Ensures centered charts on large screens */
+}
+
+/* Card title styling */
 .card-title {
   font-size: 35px;
-  text-align: center; 
-}
-
-.card-subtitle {
-  font-size: 30px;
+  text-align: center;
 }
 
 .emoji-large {
   font-size: 6rem;
   text-align: center;
-  margin-bottom: 10px; 
-}
-.current-mood-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  text-align: center;
+  margin-bottom: 10px;
+  animation: bounce 2s infinite;
 }
 
-.current-mood-text {
-  text-align: center;
-  font-size: 1.5rem;
-  margin-top: 10px;
-}
-.emojiword{
+.emojiword {
   font-size: 2em;
-  align-items: center;
-  justify-content: center;
-  margin-left: 35%;
+  text-align: center;
+  animation: bounce 0s infinite;
 }
-
 
 @keyframes bounce {
   0%, 100% {
@@ -61,5 +72,44 @@
   }
   50% {
     transform: translateY(-10px);
+  }
+}
+
+/* For title styling */
+#title {
+  text-align: center; /* Align title to the center */
+  font-size: 3em;
+  margin: 0 auto; /* Center the title block */
+}
+
+/* Current mood card styling */
+.current-mood-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* Media queries for responsive design */
+@media screen and (max-width: 768px) {
+  .charts-grid {
+    flex-direction: column; 
+  }
+
+  .date-controls {
+    flex-direction: column; 
+  }
+
+  .emoji-large {
+    font-size: 4rem; 
+  }
+
+  .card-title {
+    font-size: 28px; 
+  }
+
+  .emojiword {
+    font-size: 1.5em; 
   }
 }
