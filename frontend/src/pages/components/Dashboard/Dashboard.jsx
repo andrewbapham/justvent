@@ -23,12 +23,15 @@ const formatDate = (date) => {
 };
 
 const Dashboard = () => {
+  // Get the current date and format it
+  const currentDate = formatDate(new Date());
+
   const [currentMood, setCurrentMood] = useState('Neutral');
   const [pieData, setPieData] = useState([]);
   const [emotionsData, setEmotionsData] = useState({});
   const [userId] = useState('user_001');
   const [dateRange, setDateRange] = useState({
-    startDate: '',
+    startDate: currentDate,  // Set the default value to the current date
     rangeType: 'day',
   });
 

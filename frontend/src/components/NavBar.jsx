@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Group, UnstyledButton } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import homeIcon from "../assets/new_make_logo_updated.png";
@@ -5,6 +6,7 @@ import "./navbar.css";
 
 function NavBar() {
   const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false); // Track hover state
 
   return (
     <Group
@@ -56,17 +58,27 @@ function NavBar() {
           Dashboard
         </UnstyledButton>
       </Group>
+
       <UnstyledButton
         onClick={() => navigate("/signin")}
         className="custom-button"
+        id="hoverbutton"
         style={{
-          textAlign: "end",
-          padding: "8px",
+          textAlign: "center",
+          padding: "12px 20px", 
           outline: "none",
-          backgroundColor: "transparent",
+          backgroundColor: isHovered ? "#C46A33" : "#D4A373", // Hover effect
           border: "none",
-          width: "200px",
+          color: "white",
+          width: "100px", 
+          borderRadius: "5px",
+          fontSize: "1rem", 
+          marginRight: "0.5em",
+          cursor: "pointer", 
+          transition: "background-color 0.3s ease", 
         }}
+        onMouseEnter={() => setIsHovered(true)} 
+        onMouseLeave={() => setIsHovered(false)} // Reset hover state to false
       >
         Sign In
       </UnstyledButton>
