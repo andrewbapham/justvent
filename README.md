@@ -17,6 +17,9 @@ We built the frontend of our webapp using React. For our backend we used Python 
 7. Surprise
 
 We split each journal entry by sentence, then classify each emotion detected by the model. Using the emotions detected we can keep track of the users progress and what main emotions they felt each day. The goal is for as users continue using this model they will tend to feel more positive emotions and less negative emotions overtime. This is thanks to gratitude. We expect each user at the end of their journal entry to write one thing they are thankful for that day. Research has shown that people who tend to focus more on what they're thankful for tend to be happier [[2]](#2).
+
+Semantic search using vector embeddings functions in the same manner. When a journal is uploaded, it is chunked out into smaller portions, and each one is sent to a 3rd party LLM-based text embedding API. We retrieve these vector embeddings and store them in PostgresQL for future querying. When a user wishes to use semantic search, we embed their search term and query the database to find the terms with the closest cosine similarity.
+
 ## Challenges we ran into
 We got blocked a lot with being unable to connect to our DB due to our load balancer overloaded. This caused us to have to wasted a lot of time as we waited for it to restart.
 ## Accomplishments that we're proud of
