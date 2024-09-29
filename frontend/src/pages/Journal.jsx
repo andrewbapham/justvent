@@ -11,6 +11,7 @@ import {
   Center,
   Flex,
   Modal,
+  Menu,
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { useDisclosure } from "@mantine/hooks";
@@ -19,6 +20,7 @@ import { FaSearch, FaMicrophone } from "react-icons/fa";
 
 import useSpeechToText from "../hooks/useSpeechToText";
 import { JournalEntry } from "../components/JournalEntry";
+import Searchbar from "./components/Journal/Searchbar";
 
 const Journal = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -198,11 +200,8 @@ const Journal = () => {
           Past Journal Entries
         </Title>
         <Flex gap={10}>
-          <TextInput
-            leftSectionPointerEvents="none"
-            leftSection={<FaSearch size={20} />}
-            placeholder="Search"
-          />
+          <Searchbar />
+
           <Button onClick={open} style={{ backgroundColor: "#5D8A2C" }}>
             Write a new Entry
           </Button>
@@ -212,7 +211,7 @@ const Journal = () => {
       {journals.length > 0 ? (
         <Carousel slideGap="md" controlsOffset="xs" w={"80vw"}>
           {journals.map((journal) => (
-            <Carousel.Slide>
+            <Carousel.Slide key={journal._id}>
               <JournalEntry
                 id={journal._id}
                 content={journal.content}
