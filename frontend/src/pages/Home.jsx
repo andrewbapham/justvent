@@ -52,7 +52,7 @@ function Home() {
               size={20}
               style={{ lineHeight: "1.2", marginBottom: "1em" }}
             >
-              Feel heard at <i>Anytime</i>,<i> Anywhere</i>, <i>Anyplace</i>
+              Feel heard <i>Anytime</i>,<i> Anywhere</i>, <i>Anyplace</i>
               <br />
             </Title>
             <Center>
